@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" translate="no" class="notranslate">
 <head>
   <meta charset="UTF-8" />
+  <meta name="google" content="notranslate" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#0b57a4" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>PT BTJ (Sales Horeca Kino) — Android App</title>
+  <title>PT BTJ (Sales Horeca Kino)</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
   <style>
@@ -45,7 +46,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
     .ring-donut-inner {
       width: 42px;
@@ -63,9 +63,9 @@
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/png" href="./icon-192.png" />
 </head>
-<body>
+<body class="notranslate">
 
-  <!-- SCREEN 1: LOGIN SALES (ANDROID STYLE) -->
+  <!-- SCREEN 1: LOGIN SALES -->
   <div id="loginScreen" class="android-frame flex flex-col justify-center p-6 bg-gradient-to-b from-[#0b57a4] via-blue-700 to-indigo-900">
     <div class="bg-white rounded-3xl p-6 shadow-2xl space-y-5">
       <div class="text-center space-y-1.5">
@@ -108,7 +108,6 @@
   <!-- SCREEN 2: ANDROID APP SHELL -->
   <div id="appShell" class="hidden android-frame pb-24">
 
-    <!-- Android Top App Bar (hidden on Account home so Account blue profile banner shines cleanly) -->
     <header id="mainTopHeader" class="sticky top-0 z-30 bg-[#0b57a4] text-white shadow-md">
       <div class="px-4 py-3 flex items-center justify-between gap-2">
         <div class="min-w-0">
@@ -119,14 +118,11 @@
           </p>
         </div>
 
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button type="button" id="btnHeaderSettings" class="p-2 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 transition-all" title="Pengaturan">
-            <i data-lucide="settings" class="w-4 h-4"></i>
-          </button>
-        </div>
+        <button type="button" id="btnHeaderSettings" class="p-2 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 transition-all shrink-0" title="Pengaturan">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
       </div>
 
-      <!-- Compact Live KPI Strip -->
       <div class="bg-[#084482] border-t border-white/10 px-2 py-2 grid grid-cols-4 divide-x divide-white/15 text-center">
         <div class="px-1">
           <div class="text-[9px] uppercase tracking-wider text-blue-200 font-semibold">Visit</div>
@@ -155,7 +151,7 @@
           <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
             <div>
               <h2 class="text-sm font-extrabold text-slate-900">Absen Foto GPS & Kunjungan</h2>
-              <p class="text-[11px] text-slate-500">Auto stempel peta & caption grup WA</p>
+              <p class="text-[11px] text-slate-500">Peta live real-time & stempel GPS Map Camera</p>
             </div>
             <label for="fPhoto" class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#0b57a4] hover:bg-blue-800 active:scale-95 text-white text-xs font-bold shadow-xs shrink-0">
               <i data-lucide="camera" class="w-4 h-4"></i>
@@ -176,36 +172,36 @@
               </div>
             </div>
 
-            <!-- Lokasi GPS -->
+            <!-- Lokasi GPS Live -->
             <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
               <div class="flex items-center justify-between gap-1.5">
                 <span class="text-[11px] font-extrabold text-slate-800 flex items-center gap-1">
                   <i data-lucide="map-pin" class="w-3.5 h-3.5 text-red-600"></i>
-                  Titik Lokasi GPS
+                  Titik Lokasi GPS Live
                 </span>
                 <div class="flex gap-1.5">
-                  <button type="button" id="btnGetGps" class="px-2.5 py-1 rounded-lg bg-[#0b57a4] hover:bg-blue-700 active:scale-95 text-white text-[11px] font-bold flex items-center gap-1">
+                  <button type="button" id="btnGetGps" class="px-2.5 py-1.5 rounded-lg bg-[#0b57a4] hover:bg-blue-700 active:scale-95 text-white text-[11px] font-bold flex items-center gap-1">
                     <i data-lucide="crosshair" class="w-3 h-3"></i>
                     <span id="btnGetGpsText">Ambil GPS</span>
                   </button>
-                  <a id="btnOpenMaps" href="https://maps.google.com/?q=Sukasari,Bandung" target="_blank" rel="noopener noreferrer" class="px-2 py-1 rounded-lg bg-white border border-slate-300 text-slate-700 text-[11px] font-bold">
-                    Maps
-                  </a>
+                  <button type="button" id="btnOpenMaps" class="px-2.5 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-800 text-[11px] font-bold hover:bg-slate-100">
+                    Buka Maps
+                  </button>
                 </div>
               </div>
-              <p id="gpsStatusMsg" class="hidden text-[10px] font-semibold px-2 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200"></p>
+              <p id="gpsStatusMsg" class="hidden text-[10px] font-semibold px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-800 border border-blue-200 leading-snug"></p>
 
               <div class="grid grid-cols-2 gap-2">
                 <select id="fKecamatan" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold outline-none focus:border-blue-600"></select>
-                <input id="fCoords" type="text" placeholder="Koordinat GPS" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-[11px] font-mono outline-none focus:border-blue-600" />
+                <input id="fCoords" type="text" placeholder="Lat, Lng (otomatis)" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-[11px] font-mono outline-none focus:border-blue-600" />
               </div>
-              <input id="fAlamat" type="text" placeholder="Alamat lengkap (muncul di stempel foto — opsional)" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs outline-none focus:border-blue-600" />
+              <input id="fAlamat" type="text" placeholder="Alamat lengkap (otomatis terisi saat Ambil GPS)" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs outline-none focus:border-blue-600" />
             </div>
 
             <!-- Live Stamped Photo Preview -->
             <div id="photoPreviewWrap" class="hidden rounded-2xl bg-slate-900 p-2.5 space-y-2">
               <div class="flex items-center justify-between text-white">
-                <span class="text-[11px] font-bold text-emerald-400">Preview Foto Stempel GPS</span>
+                <span class="text-[11px] font-bold text-emerald-400">Preview Foto GPS Map Camera</span>
                 <button type="button" id="btnRemovePhoto" class="text-[11px] font-semibold text-rose-300">Hapus</button>
               </div>
               <canvas id="stampCanvas" class="w-full rounded-xl border border-slate-700 bg-black"></canvas>
@@ -221,7 +217,7 @@
               </div>
             </div>
 
-            <!-- Nama Outlet + Auto Detect Toko Lama -->
+            <!-- Nama Outlet -->
             <div class="relative">
               <div class="flex items-center justify-between mb-1">
                 <label for="fOutlet" class="text-xs font-bold text-slate-700">Nama Outlet *</label>
@@ -254,7 +250,6 @@
               <input id="fPicWa" type="tel" inputmode="tel" placeholder="0812xxxxxxxx" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs outline-none focus:border-blue-600" />
             </div>
 
-            <!-- 4 Status Kunjungan -->
             <div>
               <label class="block text-[11px] font-bold text-slate-700 mb-1.5">Keterangan Kunjungan *</label>
               <div class="grid grid-cols-2 gap-2" id="statusGrid">
@@ -302,7 +297,6 @@
           <div id="postActionBanner" class="hidden rounded-2xl p-3.5 border shadow-xs space-y-2.5"></div>
         </div>
 
-        <!-- Jadwal Follow-up -->
         <div id="followUpAlertBox" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-3.5 space-y-2">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-extrabold text-amber-900 flex items-center gap-1.5">
@@ -379,7 +373,7 @@
         </div>
       </section>
 
-      <!-- TAB 3: KPI (% OMZET, OA, NOO) -->
+      <!-- TAB 3: KPI -->
       <section id="view-kpi" class="view-section hidden space-y-3.5">
         <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3.5">
           <div class="flex items-center justify-between gap-2">
@@ -458,12 +452,9 @@
         </div>
       </section>
 
-      <!-- TAB 4: ACCOUNT (PERSIS GAYA REFERENCE IMAGE!) -->
+      <!-- TAB 4: ACCOUNT -->
       <section id="view-account" class="view-section hidden -mx-3.5 -mt-3.5">
-
-        <!-- ACCOUNT HOME VIEW -->
         <div id="accountHomeView" class="space-y-4 pb-6">
-          <!-- Blue Profile Banner + Overlapping Sales Performance Card -->
           <div class="bg-[#0b57a4] text-white px-5 pt-5 pb-20">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
@@ -482,12 +473,9 @@
             </div>
           </div>
 
-          <!-- Floating Sales Performance Card -->
           <div class="px-4 -mt-16">
             <div class="bg-white rounded-2xl p-4 shadow-md border border-slate-100 space-y-4">
               <h3 class="text-sm font-bold text-slate-600">Sales Performance</h3>
-
-              <!-- Today Row -->
               <div class="flex items-center gap-4">
                 <div id="donutToday" class="ring-donut shrink-0" style="background: conic-gradient(#f59e0b 0%, #e2e8f0 0%);">
                   <div class="ring-donut-inner" id="donutTodayText">0%</div>
@@ -498,8 +486,6 @@
                   <div class="flex justify-between"><span class="text-slate-600">Actual Visit / Omzet</span><strong id="perfTodayAct">0 / Rp 0</strong></div>
                 </div>
               </div>
-
-              <!-- MTD Row -->
               <div class="flex items-center gap-4 pt-1 border-t border-slate-100">
                 <div id="donutMtd" class="ring-donut shrink-0" style="background: conic-gradient(#10b981 0%, #e2e8f0 0%);">
                   <div class="ring-donut-inner" id="donutMtdText">0%</div>
@@ -511,39 +497,30 @@
                   <div class="flex justify-between"><span class="text-slate-600">NOO / OA</span><strong id="perfMtdNooOa">0 / 0</strong></div>
                 </div>
               </div>
-
               <div class="text-center pt-1">
                 <button type="button" id="btnAccMoreDetail" class="text-xs font-bold text-[#0b57a4] hover:underline">More Detail</button>
               </div>
             </div>
           </div>
 
-          <!-- Section: Account -->
           <div class="px-4 space-y-2">
             <h4 class="text-xs font-extrabold text-slate-800 px-1">Account</h4>
             <div class="bg-white rounded-2xl border border-slate-200 shadow-xs divide-y divide-slate-100 overflow-hidden">
-              <button type="button" id="menuMyProfile" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="user-circle" class="w-5 h-5 text-[#0b57a4]"></i>
-                  <span class="text-xs font-semibold text-slate-800">My Profile</span>
-                </div>
+              <button type="button" id="menuMyProfile" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
+                <div class="flex items-center gap-3"><i data-lucide="user-circle" class="w-5 h-5 text-[#0b57a4]"></i><span class="text-xs font-semibold text-slate-800">My Profile</span></div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
               </button>
-              <button type="button" id="menuSendData" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="upload-cloud" class="w-5 h-5 text-[#0b57a4]"></i>
-                  <span class="text-xs font-semibold text-slate-800">Send Data (Rekap & Export)</span>
-                </div>
+              <button type="button" id="menuSendData" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
+                <div class="flex items-center gap-3"><i data-lucide="upload-cloud" class="w-5 h-5 text-[#0b57a4]"></i><span class="text-xs font-semibold text-slate-800">Send Data (Rekap & Export)</span></div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
               </button>
             </div>
           </div>
 
-          <!-- Section: Utility (Master Data Customer & Master Data Produk!) -->
           <div class="px-4 space-y-2">
             <h4 class="text-xs font-extrabold text-slate-800 px-1">Utility</h4>
             <div class="bg-white rounded-2xl border border-slate-200 shadow-xs divide-y divide-slate-100 overflow-hidden">
-              <button type="button" id="menuMasterCustomer" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+              <button type="button" id="menuMasterCustomer" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
                 <div class="flex items-center gap-3">
                   <i data-lucide="store" class="w-5 h-5 text-[#0b57a4]"></i>
                   <div class="text-left">
@@ -556,8 +533,7 @@
                   <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                 </div>
               </button>
-
-              <button type="button" id="menuMasterProduct" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+              <button type="button" id="menuMasterProduct" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
                 <div class="flex items-center gap-3">
                   <i data-lucide="package" class="w-5 h-5 text-[#0b57a4]"></i>
                   <div class="text-left">
@@ -570,50 +546,35 @@
                   <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
                 </div>
               </button>
-
-              <button type="button" id="menuReport" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="clipboard-list" class="w-5 h-5 text-[#0b57a4]"></i>
-                  <span class="text-xs font-semibold text-slate-800">Report (Laporan KPI & Harian)</span>
-                </div>
+              <button type="button" id="menuReport" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
+                <div class="flex items-center gap-3"><i data-lucide="clipboard-list" class="w-5 h-5 text-[#0b57a4]"></i><span class="text-xs font-semibold text-slate-800">Report (Laporan KPI & Harian)</span></div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
               </button>
-
-              <button type="button" id="menuSynchronize" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="refresh-cw" class="w-5 h-5 text-[#0b57a4]"></i>
-                  <span class="text-xs font-semibold text-slate-800">Synchronize (Google Sheet SPV)</span>
-                </div>
+              <button type="button" id="menuSynchronize" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
+                <div class="flex items-center gap-3"><i data-lucide="refresh-cw" class="w-5 h-5 text-[#0b57a4]"></i><span class="text-xs font-semibold text-slate-800">Synchronize (Google Sheet SPV)</span></div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
               </button>
             </div>
           </div>
 
-          <!-- Section: Others -->
           <div class="px-4 space-y-2">
             <h4 class="text-xs font-extrabold text-slate-800 px-1">Others</h4>
             <div class="bg-white rounded-2xl border border-slate-200 shadow-xs divide-y divide-slate-100 overflow-hidden">
-              <button type="button" id="menuSetting" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="settings" class="w-5 h-5 text-[#0b57a4]"></i>
-                  <span class="text-xs font-semibold text-slate-800">Setting (Ganti PIN & Import)</span>
-                </div>
+              <button type="button" id="menuSetting" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50">
+                <div class="flex items-center gap-3"><i data-lucide="settings" class="w-5 h-5 text-[#0b57a4]"></i><span class="text-xs font-semibold text-slate-800">Setting (Ganti PIN & Import)</span></div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
               </button>
-              <button type="button" id="menuExit" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-red-50 active:bg-red-100 transition-colors">
-                <div class="flex items-center gap-3">
-                  <i data-lucide="power" class="w-5 h-5 text-rose-600"></i>
-                  <span class="text-xs font-semibold text-rose-700">Exit (Keluar Akun)</span>
-                </div>
+              <button type="button" id="menuExit" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-red-50">
+                <div class="flex items-center gap-3"><i data-lucide="power" class="w-5 h-5 text-rose-600"></i><span class="text-xs font-semibold text-rose-700">Exit (Keluar Akun)</span></div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
               </button>
             </div>
           </div>
 
-          <p class="text-center text-[11px] font-semibold text-slate-400 pt-1">Version 1.0 • PT BTJ (Sales Horeca Kino)</p>
+          <p class="text-center text-[11px] font-semibold text-slate-400 pt-1">Version 1.1 • PT BTJ (Sales Horeca Kino)</p>
         </div>
 
-        <!-- ACCOUNT SUB-VIEW A: MASTER DATA CUSTOMER -->
+        <!-- SUB-VIEW A: MASTER DATA CUSTOMER -->
         <div id="subViewMasterCustomer" class="hidden px-3.5 pt-3.5 pb-6 space-y-3.5">
           <button type="button" class="btn-back-account inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0b57a4]">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -624,12 +585,11 @@
             <div class="flex items-center justify-between">
               <div>
                 <h2 class="text-sm font-extrabold text-slate-900">Master Data Customer</h2>
-                <p class="text-[11px] text-slate-500">Outlet terdaftar otomatis dikenali saat kunjungan (anti dobel NOO)</p>
+                <p class="text-[11px] text-slate-500">Outlet terdaftar otomatis dikenali saat kunjungan</p>
               </div>
               <button type="button" id="btnOpenImportFromCust" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-bold shrink-0">Import Sheet</button>
             </div>
 
-            <!-- Tambah Customer Cepat -->
             <form id="addCustomerForm" class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <div class="text-[11px] font-extrabold text-slate-700">+ Tambah Customer Manual</div>
               <div class="grid grid-cols-2 gap-2">
@@ -649,13 +609,12 @@
               <button type="submit" class="w-full py-2 rounded-lg bg-[#0b57a4] text-white text-xs font-extrabold">Simpan ke Master Customer</button>
             </form>
 
-            <!-- Search Customer -->
             <input id="mcSearch" type="search" placeholder="Cari nama customer / alamat..." class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs outline-none focus:border-blue-600" />
             <div id="masterCustomerList" class="space-y-2 max-h-[24rem] overflow-y-auto"></div>
           </div>
         </div>
 
-        <!-- ACCOUNT SUB-VIEW B: MASTER DATA PRODUK -->
+        <!-- SUB-VIEW B: MASTER DATA PRODUK -->
         <div id="subViewMasterProduct" class="hidden px-3.5 pt-3.5 pb-6 space-y-3.5">
           <button type="button" class="btn-back-account inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0b57a4]">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -700,32 +659,24 @@
       </section>
     </main>
 
-    <!-- ANDROID 4-BUTTON BOTTOM NAVIGATION BAR (KUNJUNGAN, ORDER OUTLET, KPI, ACCOUNT) -->
+    <!-- ANDROID 4-BUTTON BOTTOM NAVIGATION -->
     <nav class="fixed bottom-0 left-0 right-0 z-30">
       <div class="bottom-nav-fixed bg-white border-t border-slate-200 px-2 py-1.5 shadow-[0_-4px_20px_rgba(15,23,42,0.08)]">
         <div class="grid grid-cols-4 gap-1">
           <button type="button" data-tab="visit" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
-            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
-              <i data-lucide="camera" class="w-5 h-5"></i>
-            </div>
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors"><i data-lucide="camera" class="w-5 h-5"></i></div>
             Kunjungan
           </button>
           <button type="button" data-tab="order" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
-            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
-              <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-            </div>
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
             Order Outlet
           </button>
           <button type="button" data-tab="kpi" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
-            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
-              <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-            </div>
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div>
             KPI
           </button>
           <button type="button" data-tab="account" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
-            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
-              <i data-lucide="user-circle-2" class="w-5 h-5"></i>
-            </div>
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors"><i data-lucide="user-circle-2" class="w-5 h-5"></i></div>
             Account
           </button>
         </div>
@@ -733,25 +684,16 @@
     </nav>
   </div>
 
-  <!-- SETTINGS MODAL (GANTI PIN + IMPORT DARI SHEET + SYNC SHEET) -->
+  <!-- SETTINGS MODAL -->
   <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-end sm:items-center justify-center">
     <div class="w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl max-h-[90vh] overflow-y-auto p-5 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div class="flex items-center gap-2">
-          <i data-lucide="settings" class="w-5 h-5 text-[#0b57a4]"></i>
-          <h2 class="text-base font-extrabold text-slate-900">Setting & Synchronize</h2>
-        </div>
-        <button type="button" id="btnCloseSettings" class="p-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
+        <div class="flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5 text-[#0b57a4]"></i><h2 class="text-base font-extrabold text-slate-900">Setting & Synchronize</h2></div>
+        <button type="button" id="btnCloseSettings" class="p-1.5 rounded-lg bg-slate-100 text-slate-600"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
 
-      <!-- 1. Ganti PIN -->
       <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-        <h3 class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
-          <i data-lucide="lock" class="w-3.5 h-3.5 text-[#0b57a4]"></i>
-          Ganti PIN Login Sales
-        </h3>
+        <h3 class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-[#0b57a4]"></i>Ganti PIN Login Sales</h3>
         <div class="grid grid-cols-2 gap-2">
           <input id="inpOldPin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN Lama" class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs outline-none" />
           <input id="inpNewPin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN Baru (4-6 angka)" class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs outline-none" />
@@ -759,30 +701,20 @@
         <button type="button" id="btnSavePin" class="w-full py-2 rounded-xl bg-[#0b57a4] text-white text-xs font-extrabold">Simpan PIN Baru</button>
       </div>
 
-      <!-- 2. Import Data Customer dari Google Sheet / CSV -->
       <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2.5">
-        <h3 class="text-xs font-extrabold text-emerald-900 flex items-center gap-1.5">
-          <i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-emerald-700"></i>
-          Import Master Customer dari Google Sheet
-        </h3>
-        <p class="text-[11px] text-emerald-800 leading-snug">Masukkan data outlet yang sudah ada dari Google Sheet agar otomatis dikenali sebagai toko lama.</p>
-
-        <label for="fImportCsv" class="cursor-pointer w-full py-2 px-3 rounded-xl bg-white border border-emerald-300 text-emerald-900 text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-emerald-100">
-          <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-          Pilih File CSV dari Google Sheet
+        <h3 class="text-xs font-extrabold text-emerald-900 flex items-center gap-1.5"><i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-emerald-700"></i>Import Master Customer dari Google Sheet</h3>
+        <label for="fImportCsv" class="cursor-pointer w-full py-2 px-3 rounded-xl bg-white border border-emerald-300 text-emerald-900 text-xs font-bold flex items-center justify-center gap-1.5">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>Pilih File CSV dari Google Sheet
           <input id="fImportCsv" type="file" accept=".csv,text/csv" class="hidden" />
         </label>
-
         <div class="flex gap-1.5">
           <input id="inpSheetCsvUrl" type="url" placeholder="Atau tempel link Publish CSV Google Sheet..." class="flex-1 rounded-xl border border-emerald-300 bg-white px-2.5 py-2 text-[11px] outline-none" />
           <button type="button" id="btnFetchSheetCsv" class="px-3 py-2 rounded-xl bg-emerald-700 text-white text-[11px] font-bold shrink-0">Tarik</button>
         </div>
-
         <textarea id="inpPasteSheet" rows="3" placeholder="Atau copy-paste baris dari Google Sheet:&#10;Kantin Mama Arafah, Kantin, Jl. Cikutra, Cibeunying Kidul, Bu Arafah, 0812xxx" class="w-full rounded-xl border border-emerald-300 bg-white px-2.5 py-2 text-[11px] outline-none"></textarea>
         <button type="button" id="btnImportPasted" class="w-full py-2 rounded-xl bg-emerald-600 text-white text-xs font-extrabold">Import Data yang Di-Paste</button>
       </div>
 
-      <!-- 3. Sync & Export Google Sheet SPV -->
       <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-extrabold text-slate-900">Sync Otomatis ke Sheet SPV</h3>
@@ -801,12 +733,12 @@
     </div>
   </div>
 
-  <!-- PROFILE INFO MODAL -->
+  <!-- PROFILE MODAL -->
   <div id="profileModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-3">
       <div class="flex items-center justify-between border-b border-slate-100 pb-2">
         <h3 class="text-sm font-extrabold text-slate-900">My Profile</h3>
-        <button type="button" id="btnCloseProfile" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-4 h-4"></i></button>
+        <button type="button" id="btnCloseProfile" class="text-slate-400"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
       <div class="space-y-2 text-xs">
         <div class="flex justify-between"><span class="text-slate-500">Nama Sales</span><strong class="text-slate-900">YULLI PRATIWI</strong></div>
@@ -816,6 +748,21 @@
         <div class="flex justify-between"><span class="text-slate-500">Area Garapan</span><strong class="text-[#0b57a4]">Bandung Kota (30 Kec)</strong></div>
       </div>
       <button type="button" id="btnOkProfile" class="w-full py-2 rounded-xl bg-[#0b57a4] text-white text-xs font-bold">Tutup</button>
+    </div>
+  </div>
+
+  <!-- ANDROID BACK-BUTTON EXIT CONFIRMATION MODAL -->
+  <div id="exitAppModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-2xl space-y-3 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 text-rose-600 flex items-center justify-center">
+        <i data-lucide="log-out" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-base font-extrabold text-slate-900">Keluar Aplikasi?</h3>
+      <p class="text-xs text-slate-600">Anda yakin ingin keluar dari aplikasi PT BTJ (Sales Horeca Kino)?</p>
+      <div class="grid grid-cols-2 gap-2 pt-2">
+        <button type="button" id="btnExitCancel" class="py-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Tidak</button>
+        <button type="button" id="btnExitConfirm" class="py-2.5 rounded-xl bg-rose-600 text-white text-xs font-bold">Ya, Keluar</button>
+      </div>
     </div>
   </div>
 
@@ -898,16 +845,21 @@
   return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(ContentService.MimeType.JSON);
 }`;
 
-    const STORAGE_KEY = 'btj_kino_android_v6';
+    const STORAGE_KEY = 'btj_kino_android_v7';
 
     let state = {
       salesDir: JSON.parse(JSON.stringify(DEFAULT_SALES)),
       loggedInSales: null,
       activeTab: 'visit',
-      accountSubView: 'home', // 'home' | 'customer' | 'product'
+      accountSubView: 'home',
+      navStack: ['visit'],
       orderSubTab: 'outlets',
       selectedStatus: 'Closing',
       selectedExistingOutletId: null,
+      liveLat: -6.8675,
+      liveLng: 107.5892,
+      hasLiveGps: false,
+      liveTempC: 28,
       rawImageObj: null,
       lastStampedDataUrl: '',
       lastSavedCaption: '',
@@ -979,7 +931,7 @@
       const mm = mmRaw || '00';
       const ampm = hh >= 12 ? 'pm' : 'am';
       const hh12 = hh % 12 === 0 ? 12 : hh % 12;
-      return `${dateStr || todayStr()}(${dayLabel})  ${String(hh12).padStart(2,'0')}:${mm} ${ampm}`;
+      return `${dateStr || todayStr()}(${dayLabel})   ${String(hh12).padStart(2,'0')}:${mm} ${ampm}`;
     }
     function dayNameId(dateStr) {
       const d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
@@ -1000,15 +952,13 @@
       toastTimer = setTimeout(() => {
         el.classList.remove('opacity-100');
         el.classList.add('opacity-0');
-      }, 3000);
+      }, 3200);
     }
 
     function copyText(text, msg) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => showToast(msg || 'Tersalin!')).catch(() => fallbackCopy(text, msg));
-      } else {
-        fallbackCopy(text, msg);
-      }
+      } else { fallbackCopy(text, msg); }
     }
     function fallbackCopy(text, msg) {
       const ta = document.createElement('textarea');
@@ -1024,6 +974,51 @@
       document.getElementById('modalMsg').textContent = msg;
       modalCb = cb;
       document.getElementById('confirmModal').classList.remove('hidden');
+      pushAndroidHistory();
+    }
+
+    // ANDROID HARDWARE BACK BUTTON HANDLER
+    function pushAndroidHistory() {
+      try { window.history.pushState({ btjApp: true, ts: Date.now() }, ''); } catch (e) {}
+    }
+
+    function handleAndroidBack() {
+      if (!state.loggedInSales) return;
+      // 1. Close any open modal first
+      const modals = ['exitAppModal', 'settingsModal', 'profileModal', 'confirmModal'];
+      for (const id of modals) {
+        const el = document.getElementById(id);
+        if (el && !el.classList.contains('hidden')) {
+          el.classList.add('hidden');
+          pushAndroidHistory();
+          return;
+        }
+      }
+      // 2. If inside Account sub-view -> back to Account home
+      if (state.activeTab === 'account' && state.accountSubView !== 'home') {
+        setAccountSubView('home', false);
+        pushAndroidHistory();
+        return;
+      }
+      // 3. If navStack has previous tab -> pop and go back
+      if (state.navStack.length > 1) {
+        state.navStack.pop();
+        const prev = state.navStack[state.navStack.length - 1] || 'visit';
+        setTab(prev, false);
+        pushAndroidHistory();
+        return;
+      }
+      // 4. If on another tab with empty stack -> go back to main tab ('visit')
+      if (state.activeTab !== 'visit') {
+        state.navStack = ['visit'];
+        setTab('visit', false);
+        pushAndroidHistory();
+        return;
+      }
+      // 5. Already on main screen ('visit') -> show Exit Confirmation Modal!
+      pushAndroidHistory();
+      document.getElementById('exitAppModal').classList.remove('hidden');
+      safeIcons();
     }
 
     async function pushToSheet(payload) {
@@ -1041,19 +1036,13 @@
         const delim = line.includes('\t') ? '\t' : ',';
         const cols = line.split(delim).map(c => c.replace(/^"|"$/g, '').trim());
         const name = cols[0];
-        if (!name) return;
-        if (idx === 0 && /nama\s*outlet|outlet|toko|customer/i.test(name)) return;
+        if (!name || (idx === 0 && /nama\s*outlet|outlet|toko|customer/i.test(name))) return;
         if (!state.outlets.find(o => o.name.toLowerCase() === name.toLowerCase())) {
           state.outlets.unshift({
-            id: 'imp_' + Date.now() + '_' + idx,
-            name,
-            channel: cols[1] || 'Rumah Makan',
-            alamat: cols[2] || 'Bandung Kota',
+            id: 'imp_' + Date.now() + '_' + idx, name,
+            channel: cols[1] || 'Rumah Makan', alamat: cols[2] || 'Bandung Kota',
             kecamatan: KECAMATAN_BANDUNG.includes(cols[3]) ? cols[3] : 'Sukasari',
-            picName: cols[4] || '',
-            picWa: cols[5] || '',
-            isNoo: true,
-            createdDate: todayStr()
+            picName: cols[4] || '', picWa: cols[5] || '', isNoo: true, createdDate: todayStr()
           });
           added++;
         }
@@ -1069,14 +1058,11 @@
       const totalOmzet = state.orders.reduce((s, o) => s + (Number(o.total) || 0), 0);
       const oaCount = new Set(state.orders.map(o => o.outletId)).size;
       const nooCount = state.outlets.filter(o => o.isNoo).length;
-
       const tgtOmzet = Math.max(1, Number(state.targets.omzet) || 100000000);
       const tgtOa = Math.max(1, Number(state.targets.oa) || 30);
       const tgtNoo = Math.max(1, Number(state.targets.noo) || 30);
-
       return {
-        todayVisits, todayOmzet, totalOmzet, oaCount, nooCount,
-        tgtOmzet, tgtOa, tgtNoo,
+        todayVisits, todayOmzet, totalOmzet, oaCount, nooCount, tgtOmzet, tgtOa, tgtNoo,
         pctTodayVisit: Math.min(100, Math.round((todayVisits / 15) * 100)),
         pctOmzet: Math.round((totalOmzet / tgtOmzet) * 1000) / 10,
         pctOa: Math.round((oaCount / tgtOa) * 1000) / 10,
@@ -1099,6 +1085,205 @@
           }).join(', ')
         : '[pilih produk]';
       return isNewNoo ? `${o} / kunjungan / NOO / ${summary}` : `${o} / kunjungan / ${summary}`;
+    }
+
+    // REAL LIVE MAP TILE LOADER (ArcGIS World Street Map - Keyless & CORS-enabled)
+    function latLngToTileXY(lat, lng, zoom) {
+      const n = Math.pow(2, zoom);
+      const x = ((lng + 180) / 360) * n;
+      const latRad = (lat * Math.PI) / 180;
+      const y = ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * n;
+      return { x, y };
+    }
+
+    function loadTileImage(url) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+    }
+
+    async function drawRealMapInset(ctx, mapW, barY, barH, lat, lng) {
+      const zoom = 16;
+      const { x, y } = latLngToTileXY(lat, lng, zoom);
+      const tileX = Math.floor(x);
+      const tileY = Math.floor(y);
+      const fracX = x - tileX;
+      const fracY = y - tileY;
+
+      // Load 3x3 grid around live coordinate so pin is dead center
+      const jobs = [];
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const url = `https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${zoom}/${tileY + dy}/${tileX + dx}`;
+          jobs.push(loadTileImage(url).then(im => ({ im, dx, dy })));
+        }
+      }
+      const tiles = await Promise.all(jobs);
+      const hasAnyTile = tiles.some(t => t.im !== null);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, barY, mapW, barH);
+      ctx.clip();
+
+      if (hasAnyTile) {
+        const tileSize = 256;
+        const centerPxX = mapW / 2;
+        const centerPxY = barY + barH / 2;
+        tiles.forEach(({ im, dx, dy }) => {
+          if (!im) return;
+          const drawX = centerPxX + (dx - fracX) * tileSize;
+          const drawY = centerPxY + (dy - fracY) * tileSize;
+          ctx.drawImage(im, drawX, drawY, tileSize, tileSize);
+        });
+      } else {
+        // Offline clean fallback map
+        ctx.fillStyle = '#e8eef5';
+        ctx.fillRect(0, barY, mapW, barH);
+        ctx.fillStyle = '#d6e4d2';
+        ctx.fillRect(mapW * 0.08, barY + barH * 0.12, mapW * 0.34, barH * 0.25);
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.moveTo(0, barY + barH * 0.4); ctx.lineTo(mapW, barY + barH * 0.65); ctx.moveTo(mapW * 0.45, barY); ctx.lineTo(mapW * 0.35, barY + barH); ctx.stroke();
+      }
+
+      // Crisp Google-Maps-style red location pin dead center
+      const pinX = mapW / 2;
+      const pinY = barY + barH / 2;
+      const pinR = Math.max(11, mapW * 0.055);
+      ctx.shadowColor = 'rgba(0,0,0,0.35)';
+      ctx.shadowBlur = 6;
+      ctx.fillStyle = '#ea4335';
+      ctx.beginPath();
+      ctx.arc(pinX, pinY - pinR, pinR, Math.PI, 0, false);
+      ctx.lineTo(pinX, pinY + pinR * 1.15);
+      ctx.closePath();
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#7f1d1d';
+      ctx.beginPath();
+      ctx.arc(pinX, pinY - pinR, pinR * 0.38, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // IDENTICAL REFERENCE-STYLE GPS MAP CAMERA STAMP
+    async function renderStampedPhoto() {
+      if (!state.rawImageObj) return;
+      const canvas = document.getElementById('stampCanvas');
+      const ctx = canvas.getContext('2d');
+      const img = state.rawImageObj;
+
+      const targetW = Math.min(1280, img.naturalWidth || 1280);
+      const scale = targetW / (img.naturalWidth || 1280);
+      const targetH = Math.round((img.naturalHeight || 960) * scale);
+      canvas.width = targetW;
+      canvas.height = targetH;
+
+      // 1. Base storefront photo
+      ctx.drawImage(img, 0, 0, targetW, targetH);
+
+      // Exact proportions matching reference image (~33% bottom bar, ~25% left map)
+      const barH = Math.max(240, Math.round(targetH * 0.33));
+      const barY = targetH - barH;
+      const mapW = Math.round(targetW * 0.25);
+
+      // Parse coordinates for live map tile
+      let lat = state.liveLat, lng = state.liveLng;
+      const coordVal = document.getElementById('fCoords').value.trim();
+      const parts = coordVal.split(',').map(v => parseFloat(v.trim()));
+      if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        lat = parts[0]; lng = parts[1];
+      }
+
+      // 2. Real Map Inset (Left)
+      await drawRealMapInset(ctx, mapW, barY, barH, lat, lng);
+
+      // 3. Translucent Gray Overlay Panel (Right — matching reference tone)
+      ctx.save();
+      ctx.fillStyle = 'rgba(78, 82, 88, 0.72)';
+      ctx.fillRect(mapW, barY, targetW - mapW, barH);
+
+      const padX = Math.round(targetW * 0.025);
+      const rightColW = Math.round(targetW * 0.14);
+      const kec = document.getElementById('fKecamatan').value || 'Sukasari';
+      const alamat = document.getElementById('fAlamat').value.trim() || `Kec. ${kec}, Kota Bandung, Jawa Barat, Indonesia`;
+      const dtText = formatStampDateTime(document.getElementById('fDate').value, document.getElementById('fTime').value);
+
+      // Subtle text shadow for crisp legibility like reference
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+      ctx.shadowBlur = 3;
+      ctx.shadowOffsetY = 1;
+
+      // Top Full Address Line (classic serif, regular weight)
+      ctx.fillStyle = '#ffffff';
+      const addrSize = Math.max(14, Math.round(targetW * 0.0155));
+      ctx.font = `400 ${addrSize}px "Times New Roman", Georgia, serif`;
+      ctx.textAlign = 'left';
+      const maxChars = 84;
+      const displayAddr = alamat.length > maxChars ? alamat.slice(0, maxChars - 3) + '...' : alamat;
+      ctx.fillText(displayAddr, mapW + padX, barY + barH * 0.14);
+
+      // Center 3 Big Lines (Times New Roman / Georgia serif, clean medium weight)
+      const centerX = mapW + (targetW - mapW - rightColW) * 0.5;
+      const bigSize = Math.max(28, Math.round(targetW * 0.036));
+      ctx.font = `500 ${bigSize}px "Times New Roman", Georgia, serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(`Kecamatan ${kec}`, centerX, barY + barH * 0.36);
+      ctx.fillText('Jawa Barat', centerX, barY + barH * 0.54);
+      ctx.fillText('Indonesia', centerX, barY + barH * 0.72);
+
+      // Bottom Date & Time Line (exact reference format: 2026-11-26(Thu)   12:10 am)
+      const tsSize = Math.max(22, Math.round(targetW * 0.029));
+      ctx.font = `500 ${tsSize}px "Times New Roman", Georgia, serif`;
+      ctx.fillText(dtText, centerX, barY + barH * 0.91);
+
+      // Right Column Weather Icon (Sun + Cloud + Raindrops like reference)
+      const wxX = targetW - rightColW * 0.52;
+      const wxY = barY + barH * 0.25;
+      const s = targetW / 1280;
+      ctx.shadowBlur = 0;
+
+      // Sun behind cloud
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath(); ctx.arc(wxX + 26 * s, wxY - 8 * s, 16 * s, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath(); ctx.arc(wxX + 26 * s, wxY - 8 * s, 11 * s, 0, Math.PI * 2); ctx.fill();
+
+      // White Cloud
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.arc(wxX - 14 * s, wxY + 6 * s, 18 * s, 0, Math.PI * 2);
+      ctx.arc(wxX + 4 * s, wxY - 4 * s, 21 * s, 0, Math.PI * 2);
+      ctx.arc(wxX + 22 * s, wxY + 8 * s, 15 * s, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Raindrops
+      ctx.fillStyle = '#1d4ed8';
+      [[-10, 26], [6, 22], [20, 28], [-2, 36]].forEach(([dx, dy]) => {
+        ctx.beginPath();
+        ctx.ellipse(wxX + dx * s, wxY + dy * s, 4 * s, 7 * s, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Temperature C & F in matching serif
+      const tempC = Math.round(state.liveTempC || 28);
+      const tempF = Math.round(tempC * 9 / 5 + 32);
+      ctx.shadowColor = 'rgba(0,0,0,0.45)';
+      ctx.shadowBlur = 3;
+      ctx.fillStyle = '#ffffff';
+      const tempSize = Math.max(26, Math.round(targetW * 0.032));
+      ctx.font = `500 ${tempSize}px "Times New Roman", Georgia, serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(`${tempC}°C`, wxX, barY + barH * 0.70);
+      ctx.fillText(`${tempF}°F`, wxX, barY + barH * 0.90);
+      ctx.restore();
+
+      try { state.lastStampedDataUrl = canvas.toDataURL('image/jpeg', 0.92); } catch (e) {}
     }
 
     function drawProductCardCanvas(productsList, titleText) {
@@ -1186,69 +1371,6 @@
       showToast('Gambar katalog di-download & WA dibuka!');
     }
 
-    function renderStampedPhoto() {
-      if (!state.rawImageObj) return;
-      const canvas = document.getElementById('stampCanvas');
-      const ctx = canvas.getContext('2d');
-      const img = state.rawImageObj;
-      const targetW = Math.min(1200, img.naturalWidth || 1200);
-      const scale = targetW / (img.naturalWidth || 1200);
-      const targetH = Math.round((img.naturalHeight || 900) * scale);
-      canvas.width = targetW; canvas.height = targetH;
-      ctx.drawImage(img, 0, 0, targetW, targetH);
-
-      const barH = Math.max(210, Math.round(targetH * 0.31));
-      const barY = targetH - barH, mapW = Math.round(targetW * 0.25);
-
-      ctx.save();
-      ctx.fillStyle = '#e8eef5'; ctx.fillRect(0, barY, mapW, barH);
-      ctx.fillStyle = '#d6e4d2';
-      ctx.fillRect(mapW * 0.08, barY + barH * 0.12, mapW * 0.32, barH * 0.25);
-      ctx.fillRect(mapW * 0.58, barY + barH * 0.55, mapW * 0.35, barH * 0.28);
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(4, targetW * 0.005);
-      ctx.beginPath(); ctx.moveTo(0, barY + barH * 0.35); ctx.lineTo(mapW, barY + barH * 0.65); ctx.moveTo(mapW * 0.45, barY); ctx.lineTo(mapW * 0.32, targetH); ctx.stroke();
-      ctx.strokeStyle = '#fcd34d'; ctx.lineWidth = Math.max(5, targetW * 0.006);
-      ctx.beginPath(); ctx.moveTo(0, barY + barH * 0.75); ctx.lineTo(mapW, barY + barH * 0.22); ctx.stroke();
-
-      const pinX = mapW * 0.5, pinY = barY + barH * 0.48, pinR = Math.max(10, mapW * 0.065);
-      ctx.fillStyle = '#dc2626'; ctx.beginPath(); ctx.arc(pinX, pinY - pinR, pinR, Math.PI, 0, false); ctx.lineTo(pinX, pinY + pinR * 1.1); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(pinX, pinY - pinR, pinR * 0.38, 0, Math.PI * 2); ctx.fill();
-
-      const coords = document.getElementById('fCoords').value.trim();
-      ctx.fillStyle = 'rgba(15,23,42,0.75)'; ctx.font = `bold ${Math.max(11, Math.round(targetW * 0.011))}px sans-serif`;
-      ctx.fillText(coords || 'Bandung, ID', 8, targetH - 10);
-      ctx.restore();
-
-      ctx.save();
-      ctx.fillStyle = 'rgba(20, 24, 30, 0.72)'; ctx.fillRect(mapW, barY, targetW - mapW, barH);
-      const padX = Math.round(targetW * 0.022), rightColW = Math.round(targetW * 0.14);
-      const kec = document.getElementById('fKecamatan').value || 'Sukasari';
-      const alamat = document.getElementById('fAlamat').value.trim() || `Kec. ${kec}, Kota Bandung, Jawa Barat, Indonesia`;
-      const dtText = formatStampDateTime(document.getElementById('fDate').value, document.getElementById('fTime').value);
-
-      ctx.fillStyle = '#f8fafc'; ctx.font = `${Math.max(13, Math.round(targetW * 0.0155))}px Georgia, serif`; ctx.textAlign = 'left';
-      ctx.fillText(alamat.length > 78 ? alamat.slice(0, 75) + '...' : alamat, mapW + padX, barY + barH * 0.16);
-
-      const centerX = mapW + (targetW - mapW - rightColW) * 0.5;
-      ctx.font = `bold ${Math.max(24, Math.round(targetW * 0.032))}px Georgia, serif`; ctx.textAlign = 'center'; ctx.fillStyle = '#ffffff';
-      ctx.fillText(`Kecamatan ${kec}`, centerX, barY + barH * 0.39);
-      ctx.fillText('Jawa Barat', centerX, barY + barH * 0.57);
-      ctx.fillText('Indonesia', centerX, barY + barH * 0.74);
-
-      ctx.font = `${Math.max(18, Math.round(targetW * 0.024))}px Georgia, serif`; ctx.fillStyle = '#f1f5f9';
-      ctx.fillText(dtText, centerX, barY + barH * 0.91);
-
-      const wxX = targetW - rightColW * 0.5;
-      ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(wxX + 14, barY + barH * 0.24, Math.max(10, targetW * 0.013), 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#e2e8f0'; ctx.beginPath(); ctx.arc(wxX - 4, barY + barH * 0.29, Math.max(12, targetW * 0.015), 0, Math.PI * 2); ctx.arc(wxX + 10, barY + barH * 0.30, Math.max(10, targetW * 0.012), 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#ffffff'; ctx.font = `bold ${Math.max(20, Math.round(targetW * 0.025))}px Georgia, serif`;
-      ctx.fillText('28°C', wxX, barY + barH * 0.68);
-      ctx.fillText('82°F', wxX, barY + barH * 0.88);
-      ctx.restore();
-
-      try { state.lastStampedDataUrl = canvas.toDataURL('image/jpeg', 0.9); } catch (e) {}
-    }
-
     function downloadStampedPhoto(customName) {
       if (!state.lastStampedDataUrl) { showToast('Ambil foto kunjungan dulu.'); return; }
       const a = document.createElement('a'); a.href = state.lastStampedDataUrl;
@@ -1299,7 +1421,9 @@
         document.getElementById('appShell').classList.remove('hidden');
         document.getElementById('hdrSalesSub').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-300 inline-block"></span> ${state.loggedInSales} • ${state.salesDir[state.loggedInSales].area}`;
         document.getElementById('accSalesName').textContent = state.loggedInSales.toUpperCase();
-        setTab(state.activeTab);
+        state.navStack = ['visit'];
+        pushAndroidHistory();
+        setTab(state.activeTab, false);
       } else {
         document.getElementById('loginScreen').classList.remove('hidden');
         document.getElementById('appShell').classList.add('hidden');
@@ -1307,7 +1431,11 @@
       safeIcons();
     }
 
-    function setTab(tab) {
+    function setTab(tab, pushHistory = true) {
+      if (pushHistory && tab !== state.activeTab) {
+        if (state.navStack[state.navStack.length - 1] !== tab) state.navStack.push(tab);
+        pushAndroidHistory();
+      }
       state.activeTab = tab;
       if (tab === 'account') state.accountSubView = 'home';
 
@@ -1315,7 +1443,6 @@
       const target = document.getElementById(`view-${tab}`);
       if (target) target.classList.remove('hidden');
 
-      // Hide default top header only when on Account Home (so reference blue profile header is at top!)
       const topHdr = document.getElementById('mainTopHeader');
       if (tab === 'account' && state.accountSubView === 'home') topHdr.classList.add('hidden');
       else topHdr.classList.remove('hidden');
@@ -1328,7 +1455,8 @@
       renderAll();
     }
 
-    function setAccountSubView(sub) {
+    function setAccountSubView(sub, pushHistory = true) {
+      if (pushHistory && sub !== state.accountSubView) pushAndroidHistory();
       state.accountSubView = sub;
       document.getElementById('accountHomeView').classList.toggle('hidden', sub !== 'home');
       document.getElementById('subViewMasterCustomer').classList.toggle('hidden', sub !== 'customer');
@@ -1346,7 +1474,6 @@
       document.getElementById('topKpiOa').textContent = `${k.pctOa}%`;
       document.getElementById('topKpiOmzet').textContent = `${k.pctOmzet}%`;
 
-      // Account Sales Performance Donuts
       document.getElementById('donutToday').style.background = `conic-gradient(#f59e0b ${k.pctTodayVisit}%, #e2e8f0 ${k.pctTodayVisit}%)`;
       document.getElementById('donutTodayText').textContent = `${k.pctTodayVisit}%`;
       document.getElementById('perfTodayTgt').textContent = '15 Outlet';
@@ -1475,7 +1602,7 @@
       const subEl = document.getElementById('orderSubContent');
       if (state.orderSubTab === 'outlets') {
         subEl.innerHTML = state.outlets.length === 0
-          ? `<p class="text-xs text-slate-400 text-center py-3">Belum ada outlet. Tambah lewat Kunjungan atau Master Data Customer di tab Account.</p>`
+          ? `<p class="text-xs text-slate-400 text-center py-3">Belum ada outlet. Tambah lewat Kunjungan atau Master Data Customer.</p>`
           : state.outlets.map(o => {
               const ordSum = state.orders.filter(x => x.outletId === o.id).reduce((s, x) => s + x.total, 0);
               return `<div class="p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-2">
@@ -1529,7 +1656,6 @@
           </div>
         </div>`;
       }).join('');
-
       listEl.querySelectorAll('.mc-visit-btn').forEach(b => b.addEventListener('click', () => { selectExistingOutlet(b.dataset.mcvisit); setTab('visit'); }));
       listEl.querySelectorAll('.mc-del-btn').forEach(b => b.addEventListener('click', () => {
         const id = b.dataset.mcdel;
@@ -1643,6 +1769,86 @@
       safeIcons();
     }
 
+    // REAL LIVE GPS + REVERSE GEOCODING + LIVE WEATHER
+    function requestLiveGps(openMapsAfter = false) {
+      const statusEl = document.getElementById('gpsStatusMsg');
+      const btnText = document.getElementById('btnGetGpsText');
+
+      if (!navigator.geolocation) {
+        statusEl.textContent = 'Browser tidak mendukung GPS. Pastikan buka lewat Chrome Android.';
+        statusEl.classList.remove('hidden');
+        return;
+      }
+
+      btnText.textContent = 'Mencari GPS...';
+      statusEl.textContent = 'Mengunci satelit GPS... Jika muncul pop-up izin Lokasi, pilih IZINKAN.';
+      statusEl.classList.remove('hidden');
+
+      navigator.geolocation.getCurrentPosition(
+        async pos => {
+          btnText.textContent = 'Ambil GPS';
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          state.liveLat = lat;
+          state.liveLng = lng;
+          state.hasLiveGps = true;
+          const coordText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+          document.getElementById('fCoords').value = coordText;
+          statusEl.textContent = `GPS Terkunci (${coordText}) — mengambil alamat & cuaca live...`;
+
+          if (openMapsAfter) {
+            window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank', 'noopener,noreferrer');
+          }
+
+          // Reverse geocode real street address (OpenStreetMap Nominatim)
+          try {
+            const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=id`);
+            if (r.ok) {
+              const geo = await r.json();
+              if (geo && geo.display_name) {
+                document.getElementById('fAlamat').value = geo.display_name;
+              }
+              const addrObj = (geo && geo.address) || {};
+              const rawKec = (addrObj.city_district || addrObj.suburb || addrObj.municipality || '').toLowerCase();
+              const matched = KECAMATAN_BANDUNG.find(k => rawKec.includes(k.toLowerCase()));
+              if (matched) document.getElementById('fKecamatan').value = matched;
+            }
+          } catch (e) {}
+
+          // Live temperature (Open-Meteo)
+          try {
+            const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true`);
+            if (w.ok) {
+              const wd = await w.json();
+              if (wd && wd.current_weather && typeof wd.current_weather.temperature === 'number') {
+                state.liveTempC = Math.round(wd.current_weather.temperature);
+              }
+            }
+          } catch (e) {}
+
+          statusEl.textContent = `✅ GPS Live Akurat: ${coordText} (${state.liveTempC}°C)`;
+          await renderStampedPhoto();
+          showToast(`GPS terkunci: ${coordText}`);
+        },
+        err => {
+          btnText.textContent = 'Ambil GPS';
+          if (err && err.code === 1) {
+            statusEl.textContent = 'Izin Lokasi ditolak HP/Chrome. Buka Setelan HP → Aplikasi → Chrome / BTJ Horeca → Izin → Lokasi → Izinkan, lalu klik Ambil GPS lagi.';
+          } else if (err && err.code === 2) {
+            statusEl.textContent = 'Sinyal GPS mati/tidak ditemukan. Nyalakan tombol Lokasi (GPS) di HP Anda lalu coba lagi.';
+          } else {
+            statusEl.textContent = 'Waktu tunggu GPS habis. Coba geser sedikit ke area terbuka lalu klik Ambil GPS lagi.';
+          }
+          statusEl.classList.remove('hidden');
+          if (openMapsAfter) {
+            const kec = document.getElementById('fKecamatan').value || 'Bandung';
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Kecamatan ' + kec + ', Bandung')}`, '_blank', 'noopener,noreferrer');
+          }
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       loadState();
       const kecSel = document.getElementById('fKecamatan');
@@ -1650,6 +1856,21 @@
       kecSel.value = 'Sukasari';
       document.getElementById('fDate').value = todayStr();
       document.getElementById('fTime').value = nowTimeStr();
+
+      // Android hardware back button listener
+      window.addEventListener('popstate', handleAndroidBack);
+
+      // Exit Modal Buttons
+      document.getElementById('btnExitCancel').addEventListener('click', () => {
+        document.getElementById('exitAppModal').classList.add('hidden');
+      });
+      document.getElementById('btnExitConfirm').addEventListener('click', () => {
+        document.getElementById('exitAppModal').classList.add('hidden');
+        try { window.close(); } catch (e) {}
+        // Go back past our guard to exit Android TWA cleanly
+        window.removeEventListener('popstate', handleAndroidBack);
+        window.history.go(-2);
+      });
 
       // Login
       document.getElementById('loginSales').addEventListener('change', e => {
@@ -1674,29 +1895,29 @@
       });
 
       // Bottom Nav 4 buttons
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+      document.querySelectorAll('.nav-tab-btn').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab, true)));
       document.querySelectorAll('.sub-tab-btn').forEach(b => b.addEventListener('click', () => { state.orderSubTab = b.dataset.sub; renderOrderScreen(); }));
       document.querySelectorAll('.st-btn').forEach(b => b.addEventListener('click', () => { state.selectedStatus = b.dataset.status; renderStatusButtons(); }));
 
       // Account Screen Menu Actions
-      document.getElementById('btnAccMoreDetail').addEventListener('click', () => setTab('kpi'));
+      document.getElementById('btnAccMoreDetail').addEventListener('click', () => setTab('kpi', true));
       document.getElementById('btnAccBell').addEventListener('click', () => {
         const fus = state.visits.filter(v => v.status === 'Minat / Follow-up').length;
         showToast(fus > 0 ? `Ada ${fus} outlet terjadwal Follow-up di tab Kunjungan.` : 'Belum ada notifikasi follow-up.');
       });
-      document.getElementById('menuMyProfile').addEventListener('click', () => { document.getElementById('profileModal').classList.remove('hidden'); safeIcons(); });
+      document.getElementById('menuMyProfile').addEventListener('click', () => { document.getElementById('profileModal').classList.remove('hidden'); pushAndroidHistory(); safeIcons(); });
       document.getElementById('btnCloseProfile').addEventListener('click', () => document.getElementById('profileModal').classList.add('hidden'));
       document.getElementById('btnOkProfile').addEventListener('click', () => document.getElementById('profileModal').classList.add('hidden'));
       document.getElementById('menuSendData').addEventListener('click', () => { copyText(buildDailyRecapWa(), 'Rekap data disalin untuk dikirim ke WA!'); exportCsv(); });
-      document.getElementById('menuMasterCustomer').addEventListener('click', () => setAccountSubView('customer'));
-      document.getElementById('menuMasterProduct').addEventListener('click', () => setAccountSubView('product'));
-      document.getElementById('menuReport').addEventListener('click', () => setTab('kpi'));
-      document.getElementById('menuSynchronize').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
-      document.getElementById('menuSetting').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
-      document.getElementById('btnHeaderSettings').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
+      document.getElementById('menuMasterCustomer').addEventListener('click', () => setAccountSubView('customer', true));
+      document.getElementById('menuMasterProduct').addEventListener('click', () => setAccountSubView('product', true));
+      document.getElementById('menuReport').addEventListener('click', () => setTab('kpi', true));
+      document.getElementById('menuSynchronize').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); pushAndroidHistory(); safeIcons(); });
+      document.getElementById('menuSetting').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); pushAndroidHistory(); safeIcons(); });
+      document.getElementById('btnHeaderSettings').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); pushAndroidHistory(); safeIcons(); });
       document.getElementById('menuExit').addEventListener('click', () => { state.loggedInSales = null; saveState(); showAuthOrApp(); });
-      document.querySelectorAll('.btn-back-account').forEach(b => b.addEventListener('click', () => setAccountSubView('home')));
-      document.getElementById('btnOpenImportFromCust').addEventListener('click', () => { document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
+      document.querySelectorAll('.btn-back-account').forEach(b => b.addEventListener('click', () => setAccountSubView('home', false)));
+      document.getElementById('btnOpenImportFromCust').addEventListener('click', () => { document.getElementById('settingsModal').classList.remove('hidden'); pushAndroidHistory(); safeIcons(); });
 
       // Master Customer Manual Add & Search
       document.getElementById('addCustomerForm').addEventListener('submit', e => {
@@ -1705,19 +1926,11 @@
         if (!name) return;
         if (state.outlets.some(o => o.name.toLowerCase() === name.toLowerCase())) { showToast('Customer sudah terdaftar.'); return; }
         state.outlets.unshift({
-          id: 'mc_' + Date.now(),
-          name,
-          channel: document.getElementById('mcChannel').value,
-          alamat: document.getElementById('mcAlamat').value.trim() || 'Bandung Kota',
-          kecamatan: 'Sukasari',
-          picName: '',
-          picWa: document.getElementById('mcWa').value.trim(),
-          isNoo: true,
-          createdDate: todayStr()
+          id: 'mc_' + Date.now(), name, channel: document.getElementById('mcChannel').value,
+          alamat: document.getElementById('mcAlamat').value.trim() || 'Bandung Kota', kecamatan: 'Sukasari',
+          picName: '', picWa: document.getElementById('mcWa').value.trim(), isNoo: true, createdDate: todayStr()
         });
-        saveState();
-        document.getElementById('addCustomerForm').reset();
-        renderAll();
+        saveState(); document.getElementById('addCustomerForm').reset(); renderAll();
         showToast(`${name} masuk ke Master Customer!`);
       });
       document.getElementById('mcSearch').addEventListener('input', renderMasterCustomer);
@@ -1727,8 +1940,7 @@
       document.getElementById('btnSavePin').addEventListener('click', () => {
         const oldPin = document.getElementById('inpOldPin').value.trim();
         const newPin = document.getElementById('inpNewPin').value.trim();
-        const sales = state.loggedInSales || 'Yulli Pratiwi';
-        const cur = state.salesDir[sales];
+        const cur = state.salesDir[state.loggedInSales || 'Yulli Pratiwi'];
         if (!cur || oldPin !== cur.pin) { showToast('PIN lama tidak sesuai.'); return; }
         if (!/^\d{4,6}$/.test(newPin)) { showToast('PIN baru harus 4–6 angka.'); return; }
         cur.pin = newPin; saveState();
@@ -1742,7 +1954,7 @@
         const reader = new FileReader();
         reader.onload = ev => {
           const count = parseAndImportOutlets(ev.target.result);
-          showToast(count > 0 ? `${count} customer di-import ke Master Customer!` : 'Tidak ada customer baru di file CSV.');
+          showToast(count > 0 ? `${count} customer di-import!` : 'Tidak ada customer baru di CSV.');
           e.target.value = '';
         };
         reader.readAsText(file);
@@ -1756,9 +1968,7 @@
           if (!res.ok) throw new Error('HTTP ' + res.status);
           const count = parseAndImportOutlets(await res.text());
           showToast(count > 0 ? `${count} customer di-import!` : 'Data sudah ada / format belum sesuai.');
-        } catch (err) {
-          showToast('Gagal tarik URL langsung — coba Upload File CSV atau Paste baris di bawah.');
-        }
+        } catch (err) { showToast('Gagal tarik URL langsung — coba Upload CSV atau Paste baris di bawah.'); }
       });
       document.getElementById('btnImportPasted').addEventListener('click', () => {
         const count = parseAndImportOutlets(document.getElementById('inpPasteSheet').value);
@@ -1768,46 +1978,22 @@
 
       // Live Stamp & Caption
       ['fDate','fTime','fKecamatan','fAlamat','fCoords'].forEach(id => {
-        document.getElementById(id).addEventListener('input', () => {
-          renderStampedPhoto();
-          const q = encodeURIComponent(document.getElementById('fCoords').value.trim() || document.getElementById('fAlamat').value.trim() || `Kecamatan ${document.getElementById('fKecamatan').value}, Bandung`);
-          document.getElementById('btnOpenMaps').href = `https://maps.google.com/?q=${q}`;
-        });
-        document.getElementById(id).addEventListener('change', renderStampedPhoto);
+        document.getElementById(id).addEventListener('input', () => renderStampedPhoto());
+        document.getElementById(id).addEventListener('change', () => renderStampedPhoto());
       });
       ['fOutlet','fNote'].forEach(id => document.getElementById(id).addEventListener('input', () => {
         document.getElementById('visitFormError').classList.add('hidden');
         updateDraftCaption();
       }));
 
-      // GPS button
-      document.getElementById('btnGetGps').addEventListener('click', () => {
-        const statusEl = document.getElementById('gpsStatusMsg');
-        const btnText = document.getElementById('btnGetGpsText');
-        const kec = document.getElementById('fKecamatan').value || 'Sukasari';
-        const applyFallback = (reason) => {
-          btnText.textContent = 'Ambil GPS';
-          const fallbackAddr = `Kec. ${kec}, Kota Bandung, Jawa Barat, Indonesia`;
-          if (!document.getElementById('fAlamat').value.trim()) document.getElementById('fAlamat').value = fallbackAddr;
-          document.getElementById('fCoords').value = `Kec. ${kec}, Bandung`;
-          document.getElementById('btnOpenMaps').href = `https://maps.google.com/?q=${encodeURIComponent(fallbackAddr)}`;
-          statusEl.textContent = reason; statusEl.classList.remove('hidden');
-          renderStampedPhoto(); showToast(`Lokasi diset ke Kec. ${kec}, Bandung`);
-        };
-        btnText.textContent = 'Mencari...'; statusEl.textContent = 'Mengambil titik GPS...'; statusEl.classList.remove('hidden');
-        if (!navigator.geolocation) { applyFallback('GPS tidak tersedia di preview — otomatis pakai Kecamatan terpilih.'); return; }
-        let settled = false;
-        const guard = setTimeout(() => { if (!settled) { settled = true; applyFallback('Sensor GPS dibatasi di preview — otomatis pakai Kecamatan terpilih (di HP langsung GPS aktif).'); } }, 3500);
-        try {
-          navigator.geolocation.getCurrentPosition(pos => {
-            if (settled) return; settled = true; clearTimeout(guard); btnText.textContent = 'Ambil GPS';
-            const lat = pos.coords.latitude.toFixed(6), lng = pos.coords.longitude.toFixed(6);
-            document.getElementById('fCoords').value = `${lat}, ${lng}`;
-            document.getElementById('btnOpenMaps').href = `https://maps.google.com/?q=${lat},${lng}`;
-            statusEl.textContent = `GPS aktif: ${lat}, ${lng}`;
-            renderStampedPhoto(); showToast(`GPS didapat: ${lat}, ${lng}`);
-          }, () => { if (!settled) { settled = true; clearTimeout(guard); applyFallback('Izin GPS diblokir di preview — otomatis pakai Kecamatan terpilih.'); } }, { enableHighAccuracy: true, timeout: 3000 });
-        } catch (err) { if (!settled) { settled = true; clearTimeout(guard); applyFallback('Otomatis pakai Kecamatan terpilih.'); } }
+      // GPS & Live Maps Buttons
+      document.getElementById('btnGetGps').addEventListener('click', () => requestLiveGps(false));
+      document.getElementById('btnOpenMaps').addEventListener('click', () => {
+        if (state.hasLiveGps) {
+          window.open(`https://www.google.com/maps/search/?api=1&query=${state.liveLat},${state.liveLng}`, '_blank', 'noopener,noreferrer');
+        } else {
+          requestLiveGps(true);
+        }
       });
 
       document.getElementById('fPhoto').addEventListener('change', e => {
@@ -1816,11 +2002,12 @@
         const reader = new FileReader();
         reader.onload = ev => {
           const img = new Image();
-          img.onload = () => {
+          img.onload = async () => {
             state.rawImageObj = img;
             document.getElementById('photoPreviewWrap').classList.remove('hidden');
             document.getElementById('photoBtnText').textContent = 'Ganti Foto';
-            renderStampedPhoto(); showToast('Foto berstempel GPS siap!');
+            await renderStampedPhoto();
+            showToast('Foto GPS Map Camera siap!');
           };
           img.src = ev.target.result;
         };
@@ -1867,7 +2054,7 @@
         const visitDate = document.getElementById('fDate').value || todayStr();
         const visitTime = document.getElementById('fTime').value || nowTimeStr();
         const status = state.selectedStatus;
-        renderStampedPhoto();
+        await renderStampedPhoto();
 
         let outlet = state.selectedExistingOutletId ? state.outlets.find(o => o.id === state.selectedExistingOutletId) : state.outlets.find(o => o.name.toLowerCase() === name.toLowerCase());
         let isNewNoo = false;
@@ -1900,7 +2087,7 @@
           state.activeOrderOutletId = outlet.id; state.activeOrderIsNewNoo = isNewNoo; state.cart = [];
           resetVisitForm(true);
           showToast(isNewNoo ? `${outlet.name} masuk NOO Baru! Lanjut order.` : `RO ${outlet.name}. Lanjut order!`);
-          setTab('order');
+          setTab('order', true);
           return;
         }
 
