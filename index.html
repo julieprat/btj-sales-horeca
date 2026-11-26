@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b57a4" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>PT BTJ (Sales Horeca Kino) — Android App</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #e2e8f0;
+      color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .android-frame {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background-color: #f4f6fb;
+      position: relative;
+      box-shadow: 0 0 40px rgba(15, 23, 42, 0.14);
+    }
+    .bottom-nav-fixed {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .tab-active {
+      color: #0b57a4;
+    }
+    .tab-active .tab-pill {
+      background-color: #dbeafe;
+    }
+    .tab-active svg {
+      stroke-width: 2.4;
+    }
+    .ring-donut {
+      width: 54px;
+      height: 54px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .ring-donut-inner {
+      width: 42px;
+      height: 42px;
+      border-radius: 9999px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+  </style>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" href="./icon-192.png" />
+</head>
+<body>
+
+  <!-- SCREEN 1: LOGIN SALES (ANDROID STYLE) -->
+  <div id="loginScreen" class="android-frame flex flex-col justify-center p-6 bg-gradient-to-b from-[#0b57a4] via-blue-700 to-indigo-900">
+    <div class="bg-white rounded-3xl p-6 shadow-2xl space-y-5">
+      <div class="text-center space-y-1.5">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-[#0b57a4] text-white flex items-center justify-center shadow-lg">
+          <i data-lucide="smartphone" class="w-8 h-8"></i>
+        </div>
+        <h1 class="text-lg font-extrabold text-slate-900">PT BTJ (Sales Horeca Kino)</h1>
+        <p class="text-xs text-slate-500">Banceuy Tunggal Jaya • Versi Android</p>
+      </div>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="loginSales" class="block text-xs font-bold text-slate-700 mb-1.5">Nama Sales</label>
+          <select id="loginSales" required class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm font-semibold text-slate-900 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none">
+            <option value="Yulli Pratiwi">Yulli Pratiwi</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="loginArea" class="block text-xs font-bold text-slate-700 mb-1.5">Area Garapan (Otomatis)</label>
+          <div class="relative">
+            <input id="loginArea" type="text" readonly value="Bandung Kota" class="w-full rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-3 text-sm font-bold text-blue-900 outline-none" />
+            <i data-lucide="map-pin" class="w-4 h-4 text-blue-600 absolute right-3.5 top-3.5"></i>
+          </div>
+        </div>
+
+        <div>
+          <label for="loginPin" class="block text-xs font-bold text-slate-700 mb-1.5">PIN Sales</label>
+          <input id="loginPin" type="password" inputmode="numeric" maxlength="6" required placeholder="Masukkan PIN (default: 1234)" class="w-full rounded-xl border border-slate-300 px-3.5 py-3 text-base tracking-[0.35em] placeholder:tracking-normal placeholder:font-medium placeholder:text-xs font-extrabold text-center focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none" />
+          <p id="loginError" class="hidden text-xs text-red-600 font-semibold mt-1.5 text-center">PIN salah. Cek PIN Anda (default: 1234).</p>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-[#0b57a4] hover:bg-blue-800 active:scale-[0.98] text-white font-bold text-sm shadow-md transition-all">
+          Masuk Aplikasi
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: ANDROID APP SHELL -->
+  <div id="appShell" class="hidden android-frame pb-24">
+
+    <!-- Android Top App Bar (hidden on Account home so Account blue profile banner shines cleanly) -->
+    <header id="mainTopHeader" class="sticky top-0 z-30 bg-[#0b57a4] text-white shadow-md">
+      <div class="px-4 py-3 flex items-center justify-between gap-2">
+        <div class="min-w-0">
+          <h1 class="text-sm font-extrabold tracking-tight truncate" id="hdrBrandTitle">PT BTJ (Sales Horeca Kino)</h1>
+          <p class="text-[11px] text-blue-100 truncate flex items-center gap-1" id="hdrSalesSub">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 inline-block"></span>
+            Yulli Pratiwi • Bandung Kota
+          </p>
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button type="button" id="btnHeaderSettings" class="p-2 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 transition-all" title="Pengaturan">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Compact Live KPI Strip -->
+      <div class="bg-[#084482] border-t border-white/10 px-2 py-2 grid grid-cols-4 divide-x divide-white/15 text-center">
+        <div class="px-1">
+          <div class="text-[9px] uppercase tracking-wider text-blue-200 font-semibold">Visit</div>
+          <div class="text-xs font-extrabold" id="topKpiVisits">0/15</div>
+        </div>
+        <div class="px-1">
+          <div class="text-[9px] uppercase tracking-wider text-blue-200 font-semibold">NOO</div>
+          <div class="text-xs font-extrabold text-emerald-300" id="topKpiNoo">0%</div>
+        </div>
+        <div class="px-1">
+          <div class="text-[9px] uppercase tracking-wider text-blue-200 font-semibold">OA</div>
+          <div class="text-xs font-extrabold text-sky-200" id="topKpiOa">0%</div>
+        </div>
+        <div class="px-1">
+          <div class="text-[9px] uppercase tracking-wider text-blue-200 font-semibold">Omzet</div>
+          <div class="text-xs font-extrabold text-amber-300" id="topKpiOmzet">0%</div>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContentWrap" class="px-3.5 pt-3.5 space-y-3.5">
+
+      <!-- TAB 1: KUNJUNGAN -->
+      <section id="view-visit" class="view-section space-y-3.5">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3.5">
+          <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900">Absen Foto GPS & Kunjungan</h2>
+              <p class="text-[11px] text-slate-500">Auto stempel peta & caption grup WA</p>
+            </div>
+            <label for="fPhoto" class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#0b57a4] hover:bg-blue-800 active:scale-95 text-white text-xs font-bold shadow-xs shrink-0">
+              <i data-lucide="camera" class="w-4 h-4"></i>
+              <span id="photoBtnText">Foto GPS</span>
+              <input id="fPhoto" type="file" accept="image/*" capture="environment" class="hidden" />
+            </label>
+          </div>
+
+          <form id="visitForm" novalidate class="space-y-3">
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label for="fDate" class="block text-[11px] font-bold text-slate-700 mb-1">Tanggal</label>
+                <input id="fDate" type="date" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold outline-none focus:border-blue-600" />
+              </div>
+              <div>
+                <label for="fTime" class="block text-[11px] font-bold text-slate-700 mb-1">Waktu</label>
+                <input id="fTime" type="time" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold outline-none focus:border-blue-600" />
+              </div>
+            </div>
+
+            <!-- Lokasi GPS -->
+            <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between gap-1.5">
+                <span class="text-[11px] font-extrabold text-slate-800 flex items-center gap-1">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-red-600"></i>
+                  Titik Lokasi GPS
+                </span>
+                <div class="flex gap-1.5">
+                  <button type="button" id="btnGetGps" class="px-2.5 py-1 rounded-lg bg-[#0b57a4] hover:bg-blue-700 active:scale-95 text-white text-[11px] font-bold flex items-center gap-1">
+                    <i data-lucide="crosshair" class="w-3 h-3"></i>
+                    <span id="btnGetGpsText">Ambil GPS</span>
+                  </button>
+                  <a id="btnOpenMaps" href="https://maps.google.com/?q=Sukasari,Bandung" target="_blank" rel="noopener noreferrer" class="px-2 py-1 rounded-lg bg-white border border-slate-300 text-slate-700 text-[11px] font-bold">
+                    Maps
+                  </a>
+                </div>
+              </div>
+              <p id="gpsStatusMsg" class="hidden text-[10px] font-semibold px-2 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200"></p>
+
+              <div class="grid grid-cols-2 gap-2">
+                <select id="fKecamatan" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold outline-none focus:border-blue-600"></select>
+                <input id="fCoords" type="text" placeholder="Koordinat GPS" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-[11px] font-mono outline-none focus:border-blue-600" />
+              </div>
+              <input id="fAlamat" type="text" placeholder="Alamat lengkap (muncul di stempel foto — opsional)" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs outline-none focus:border-blue-600" />
+            </div>
+
+            <!-- Live Stamped Photo Preview -->
+            <div id="photoPreviewWrap" class="hidden rounded-2xl bg-slate-900 p-2.5 space-y-2">
+              <div class="flex items-center justify-between text-white">
+                <span class="text-[11px] font-bold text-emerald-400">Preview Foto Stempel GPS</span>
+                <button type="button" id="btnRemovePhoto" class="text-[11px] font-semibold text-rose-300">Hapus</button>
+              </div>
+              <canvas id="stampCanvas" class="w-full rounded-xl border border-slate-700 bg-black"></canvas>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" id="btnDownloadStampNow" class="py-2 rounded-xl bg-white/15 text-white text-xs font-bold flex items-center justify-center gap-1">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  Download
+                </button>
+                <button type="button" id="btnShareStampNow" class="py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center justify-center gap-1">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  Share WA
+                </button>
+              </div>
+            </div>
+
+            <!-- Nama Outlet + Auto Detect Toko Lama -->
+            <div class="relative">
+              <div class="flex items-center justify-between mb-1">
+                <label for="fOutlet" class="text-xs font-bold text-slate-700">Nama Outlet *</label>
+                <span id="outletTypeBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700">Outlet Baru (NOO)</span>
+              </div>
+              <input id="fOutlet" type="text" autocomplete="off" placeholder="Ketik nama outlet (master customer muncul otomatis)..." class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none" />
+              <div id="outletSuggestions" class="hidden absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg z-20 max-h-44 overflow-y-auto divide-y divide-slate-100"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label for="fChannel" class="block text-[11px] font-bold text-slate-700 mb-1">Channel</label>
+                <select id="fChannel" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold outline-none focus:border-blue-600">
+                  <option value="Rumah Makan">Rumah Makan</option>
+                  <option value="Kafe / Kedai">Kafe / Kedai</option>
+                  <option value="Restoran">Restoran</option>
+                  <option value="Hotel">Hotel</option>
+                  <option value="Kantin / Pujasera">Kantin / Pujasera</option>
+                  <option value="Apotek / Lainnya">Apotek / Lainnya</option>
+                </select>
+              </div>
+              <div>
+                <label for="fPicName" class="block text-[11px] font-bold text-slate-700 mb-1">Owner / PIC</label>
+                <input id="fPicName" type="text" placeholder="Nama PIC" class="w-full rounded-xl border border-slate-300 px-2.5 py-2 text-xs outline-none focus:border-blue-600" />
+              </div>
+            </div>
+
+            <div>
+              <label for="fPicWa" class="block text-[11px] font-bold text-slate-700 mb-1">No. WA Owner / PIC</label>
+              <input id="fPicWa" type="tel" inputmode="tel" placeholder="0812xxxxxxxx" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs outline-none focus:border-blue-600" />
+            </div>
+
+            <!-- 4 Status Kunjungan -->
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1.5">Keterangan Kunjungan *</label>
+              <div class="grid grid-cols-2 gap-2" id="statusGrid">
+                <button type="button" data-status="Closing" class="st-btn p-2.5 rounded-xl border text-left transition-all">
+                  <div class="text-xs font-extrabold">✅ Closing</div>
+                  <div class="text-[10px] opacity-80">NOO → Form Order</div>
+                </button>
+                <button type="button" data-status="Minat / Follow-up" class="st-btn p-2.5 rounded-xl border text-left transition-all">
+                  <div class="text-xs font-extrabold">📞 Minat / FU</div>
+                  <div class="text-[10px] opacity-80">WA +7hr / Visit +14hr</div>
+                </button>
+                <button type="button" data-status="Owner Tidak Ada" class="st-btn p-2.5 rounded-xl border text-left transition-all">
+                  <div class="text-xs font-extrabold">👤 Owner Tdk Ada</div>
+                  <div class="text-[10px] opacity-80">WA otomatis hari ini</div>
+                </button>
+                <button type="button" data-status="Tolak" class="st-btn p-2.5 rounded-xl border text-left transition-all">
+                  <div class="text-xs font-extrabold">❌ Tolak</div>
+                  <div class="text-[10px] opacity-80">Data kunjungan saja</div>
+                </button>
+              </div>
+            </div>
+
+            <input id="fNote" type="text" placeholder="Keterangan tambahan (misal: tidak mau diregister)" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-xs outline-none focus:border-blue-600" />
+
+            <!-- Live Auto Caption -->
+            <div class="rounded-2xl bg-slate-900 text-white p-3 space-y-1.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Auto Caption Grup WA</span>
+                <div class="flex gap-1.5">
+                  <button type="button" id="btnCopyDraftCaption" class="px-2 py-1 rounded-lg bg-white/15 text-[10px] font-bold">Copy</button>
+                  <button type="button" id="btnShareDraftNow" class="px-2 py-1 rounded-lg bg-emerald-600 text-[10px] font-bold">Share WA</button>
+                </div>
+              </div>
+              <p id="liveAutoCaption" class="text-xs font-semibold text-slate-100 break-words"></p>
+            </div>
+
+            <p id="visitFormError" class="hidden text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded-xl"></p>
+
+            <button type="submit" id="btnSubmitVisit" class="w-full py-3.5 rounded-xl bg-[#0b57a4] hover:bg-blue-800 active:scale-[0.98] text-white font-extrabold text-sm shadow-sm transition-all flex items-center justify-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span id="btnSubmitVisitLabel">Simpan Kunjungan</span>
+            </button>
+          </form>
+
+          <div id="postActionBanner" class="hidden rounded-2xl p-3.5 border shadow-xs space-y-2.5"></div>
+        </div>
+
+        <!-- Jadwal Follow-up -->
+        <div id="followUpAlertBox" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-3.5 space-y-2">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-extrabold text-amber-900 flex items-center gap-1.5">
+              <i data-lucide="bell-ring" class="w-4 h-4 text-amber-600"></i>
+              Jadwal Follow-up (+7hr WA / +14hr Visit)
+            </h3>
+            <span class="text-[11px] font-bold text-amber-800" id="followUpCountBadge">0</span>
+          </div>
+          <div id="followUpMiniList" class="space-y-2"></div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ORDER & OUTLET -->
+      <section id="view-order" class="view-section hidden space-y-3.5">
+        <div class="bg-white rounded-2xl p-4 border-2 border-emerald-200 shadow-xs space-y-3.5">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Menu Order PT Kino</span>
+              <h2 class="text-sm font-extrabold text-slate-900 mt-1">Input Orderan Closing / RO</h2>
+            </div>
+            <button type="button" id="btnClearCart" class="text-xs font-bold text-slate-400 hover:text-red-600">Reset</button>
+          </div>
+
+          <select id="oOutletSelect" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs font-bold outline-none focus:border-emerald-600"></select>
+
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <select id="oProductSelect" class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold outline-none focus:border-emerald-600"></select>
+            <div class="grid grid-cols-3 gap-2">
+              <select id="oUnitType" class="rounded-xl border border-slate-300 bg-white px-2 py-2 text-xs font-bold outline-none">
+                <option value="karton">Karton</option>
+                <option value="pcs">Pcs</option>
+              </select>
+              <input id="oQty" type="number" min="1" value="1" class="rounded-xl border border-slate-300 bg-white px-2 py-2 text-xs font-bold text-center outline-none" />
+              <input id="oVariantNote" type="text" placeholder="Varian (mix)" class="rounded-xl border border-slate-300 bg-white px-2 py-2 text-xs outline-none" />
+            </div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] text-slate-600">Harga: <strong id="oSelectedPrice" class="text-slate-900">Rp 0</strong></span>
+              <button type="button" id="btnAddCartItem" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold">+ Tambah</button>
+            </div>
+          </div>
+
+          <div id="cartItemsList" class="space-y-2"></div>
+
+          <div class="rounded-2xl bg-slate-900 text-white p-3 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase text-emerald-400">Auto Caption Order WA</span>
+              <button type="button" id="btnCopyOrderCaptionOnly" class="text-[11px] font-bold text-blue-300">Copy</button>
+            </div>
+            <p id="liveOrderCaption" class="text-xs font-semibold text-slate-100 break-words"></p>
+          </div>
+
+          <div class="pt-2 border-t border-slate-200 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">Total Order</span>
+              <span class="text-lg font-extrabold text-emerald-700" id="oCartTotal">Rp 0</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1.5">
+              <button type="button" id="btnSaveOrder" class="py-2.5 px-2 rounded-xl bg-emerald-600 text-white font-extrabold text-[11px]">Simpan</button>
+              <button type="button" id="btnShareOrderPhoto" class="py-2.5 px-2 rounded-xl bg-[#0b57a4] text-white font-extrabold text-[11px]">Share WA</button>
+              <button type="button" id="btnDownloadOrderPhoto" class="py-2.5 px-2 rounded-xl bg-slate-100 text-slate-800 font-extrabold text-[11px]">Download</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3.5 border border-slate-200 shadow-xs space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <div class="inline-flex bg-slate-100 p-1 rounded-xl">
+              <button type="button" data-sub="outlets" class="sub-tab-btn px-2.5 py-1.5 rounded-lg text-[11px] font-bold">Outlet (<span id="cntOutlets">0</span>)</button>
+              <button type="button" data-sub="logs" class="sub-tab-btn px-2.5 py-1.5 rounded-lg text-[11px] font-bold">Riwayat (<span id="cntLogs">0</span>)</button>
+            </div>
+            <button type="button" id="btnCopyRecapWa" class="px-2.5 py-1.5 rounded-xl bg-blue-50 text-blue-800 text-[11px] font-bold">Rekap WA</button>
+          </div>
+          <div id="orderSubContent" class="space-y-2"></div>
+        </div>
+      </section>
+
+      <!-- TAB 3: KPI (% OMZET, OA, NOO) -->
+      <section id="view-kpi" class="view-section hidden space-y-3.5">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3.5">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900">Pencapaian KPI Bulanan</h2>
+              <p class="text-[11px] text-slate-500">Persentase Omzet, OA & NOO real-time</p>
+            </div>
+            <button type="button" id="btnCopyKpiWa" class="px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1 shrink-0">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+              Share KPI
+            </button>
+          </div>
+
+          <div class="space-y-2.5">
+            <div class="rounded-2xl p-3.5 border border-indigo-200 bg-indigo-50/50 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-indigo-900">Omzet Bulanan</span>
+                <span id="kpiPctOmzet" class="text-lg font-black text-indigo-700">0%</span>
+              </div>
+              <div class="w-full h-2.5 bg-indigo-100 rounded-full overflow-hidden">
+                <div id="kpiBarOmzet" class="h-full bg-indigo-600 rounded-full transition-all" style="width:0%"></div>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-600">Realisasi: <strong id="kpiValOmzet" class="text-slate-900">Rp 0</strong></span>
+                <span class="text-slate-500">Target: <strong id="kpiTgtOmzetLabel">Rp 100 jt</strong></span>
+              </div>
+            </div>
+
+            <div class="rounded-2xl p-3.5 border border-sky-200 bg-sky-50/50 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-sky-900">OA (Outlet Aktif)</span>
+                <span id="kpiPctOa" class="text-lg font-black text-sky-700">0%</span>
+              </div>
+              <div class="w-full h-2.5 bg-sky-100 rounded-full overflow-hidden">
+                <div id="kpiBarOa" class="h-full bg-sky-600 rounded-full transition-all" style="width:0%"></div>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-600">Aktif: <strong id="kpiValOa" class="text-slate-900">0 outlet</strong></span>
+                <span class="text-slate-500">Target: <strong id="kpiTgtOaLabel">30 outlet</strong></span>
+              </div>
+            </div>
+
+            <div class="rounded-2xl p-3.5 border border-emerald-200 bg-emerald-50/50 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-emerald-900">NOO (New Open Outlet)</span>
+                <span id="kpiPctNoo" class="text-lg font-black text-emerald-700">0%</span>
+              </div>
+              <div class="w-full h-2.5 bg-emerald-100 rounded-full overflow-hidden">
+                <div id="kpiBarNoo" class="h-full bg-emerald-600 rounded-full transition-all" style="width:0%"></div>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-600">NOO: <strong id="kpiValNoo" class="text-slate-900">0 outlet</strong></span>
+                <span class="text-slate-500">Target: <strong id="kpiTgtNooLabel">30 outlet</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <h3 class="text-xs font-extrabold text-slate-800">Atur Target Bulanan</h3>
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label for="inpTgtOmzet" class="block text-[10px] font-bold text-slate-600 mb-1">Omzet (Rp)</label>
+                <input id="inpTgtOmzet" type="number" class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs font-bold outline-none" />
+              </div>
+              <div>
+                <label for="inpTgtOa" class="block text-[10px] font-bold text-slate-600 mb-1">Target OA</label>
+                <input id="inpTgtOa" type="number" class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs font-bold outline-none" />
+              </div>
+              <div>
+                <label for="inpTgtNoo" class="block text-[10px] font-bold text-slate-600 mb-1">Target NOO</label>
+                <input id="inpTgtNoo" type="number" class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs font-bold outline-none" />
+              </div>
+            </div>
+            <button type="button" id="btnSaveTargets" class="w-full py-2 rounded-xl bg-[#0b57a4] text-white text-xs font-extrabold">Simpan Target KPI</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ACCOUNT (PERSIS GAYA REFERENCE IMAGE!) -->
+      <section id="view-account" class="view-section hidden -mx-3.5 -mt-3.5">
+
+        <!-- ACCOUNT HOME VIEW -->
+        <div id="accountHomeView" class="space-y-4 pb-6">
+          <!-- Blue Profile Banner + Overlapping Sales Performance Card -->
+          <div class="bg-[#0b57a4] text-white px-5 pt-5 pb-20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-slate-200/30 border-2 border-white flex items-center justify-center">
+                  <i data-lucide="user" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-sm font-extrabold tracking-wide uppercase" id="accSalesName">YULLI PRATIWI</h2>
+                  <p class="text-[11px] text-blue-100 font-mono">3355IR6103 • Bandung Kota</p>
+                </div>
+              </div>
+              <button type="button" id="btnAccBell" class="relative p-2 rounded-full hover:bg-white/10">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+                <span id="accBellBadge" class="hidden absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-amber-400 border border-[#0b57a4]"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Floating Sales Performance Card -->
+          <div class="px-4 -mt-16">
+            <div class="bg-white rounded-2xl p-4 shadow-md border border-slate-100 space-y-4">
+              <h3 class="text-sm font-bold text-slate-600">Sales Performance</h3>
+
+              <!-- Today Row -->
+              <div class="flex items-center gap-4">
+                <div id="donutToday" class="ring-donut shrink-0" style="background: conic-gradient(#f59e0b 0%, #e2e8f0 0%);">
+                  <div class="ring-donut-inner" id="donutTodayText">0%</div>
+                </div>
+                <div class="flex-1 text-xs space-y-1">
+                  <div class="font-bold text-[#0b57a4]">Today</div>
+                  <div class="flex justify-between"><span class="text-slate-600">Target Visit</span><strong id="perfTodayTgt">15 Outlet</strong></div>
+                  <div class="flex justify-between"><span class="text-slate-600">Actual Visit / Omzet</span><strong id="perfTodayAct">0 / Rp 0</strong></div>
+                </div>
+              </div>
+
+              <!-- MTD Row -->
+              <div class="flex items-center gap-4 pt-1 border-t border-slate-100">
+                <div id="donutMtd" class="ring-donut shrink-0" style="background: conic-gradient(#10b981 0%, #e2e8f0 0%);">
+                  <div class="ring-donut-inner" id="donutMtdText">0%</div>
+                </div>
+                <div class="flex-1 text-xs space-y-1">
+                  <div class="font-bold text-[#0b57a4]">MTD</div>
+                  <div class="flex justify-between"><span class="text-slate-600">Target Omzet</span><strong id="perfMtdTgt">Rp 100.000.000</strong></div>
+                  <div class="flex justify-between"><span class="text-slate-600">Actual Omzet</span><strong id="perfMtdAct">Rp 0</strong></div>
+                  <div class="flex justify-between"><span class="text-slate-600">NOO / OA</span><strong id="perfMtdNooOa">0 / 0</strong></div>
+                </div>
+              </div>
+
+              <div class="text-center pt-1">
+                <button type="button" id="btnAccMoreDetail" class="text-xs font-bold text-[#0b57a4] hover:underline">More Detail</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Account -->
+          <div class="px-4 space-y-2">
+            <h4 class="text-xs font-extrabold text-slate-800 px-1">Account</h4>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs divide-y divide-slate-100 overflow-hidden">
+              <button type="button" id="menuMyProfile" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="user-circle" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <span class="text-xs font-semibold text-slate-800">My Profile</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              </button>
+              <button type="button" id="menuSendData" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="upload-cloud" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <span class="text-xs font-semibold text-slate-800">Send Data (Rekap & Export)</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section: Utility (Master Data Customer & Master Data Produk!) -->
+          <div class="px-4 space-y-2">
+            <h4 class="text-xs font-extrabold text-slate-800 px-1">Utility</h4>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs divide-y divide-slate-100 overflow-hidden">
+              <button type="button" id="menuMasterCustomer" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="store" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <div class="text-left">
+                    <div class="text-xs font-bold text-slate-900">Master Data Customer</div>
+                    <div class="text-[10px] text-slate-500">Database outlet, tambah manual & import Google Sheet</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span id="badgeMasterCustCount" class="px-2 py-0.5 rounded-full bg-blue-50 text-[#0b57a4] text-[10px] font-extrabold">0</span>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </div>
+              </button>
+
+              <button type="button" id="menuMasterProduct" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="package" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <div class="text-left">
+                    <div class="text-xs font-bold text-slate-900">Master Data Produk</div>
+                    <div class="text-[10px] text-slate-500">26 SKU PT Kino, edit harga & share WA + gambar</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-extrabold">26</span>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </div>
+              </button>
+
+              <button type="button" id="menuReport" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="clipboard-list" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <span class="text-xs font-semibold text-slate-800">Report (Laporan KPI & Harian)</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              </button>
+
+              <button type="button" id="menuSynchronize" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="refresh-cw" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <span class="text-xs font-semibold text-slate-800">Synchronize (Google Sheet SPV)</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section: Others -->
+          <div class="px-4 space-y-2">
+            <h4 class="text-xs font-extrabold text-slate-800 px-1">Others</h4>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs divide-y divide-slate-100 overflow-hidden">
+              <button type="button" id="menuSetting" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-slate-50 active:bg-slate-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="settings" class="w-5 h-5 text-[#0b57a4]"></i>
+                  <span class="text-xs font-semibold text-slate-800">Setting (Ganti PIN & Import)</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              </button>
+              <button type="button" id="menuExit" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-red-50 active:bg-red-100 transition-colors">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="power" class="w-5 h-5 text-rose-600"></i>
+                  <span class="text-xs font-semibold text-rose-700">Exit (Keluar Akun)</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <p class="text-center text-[11px] font-semibold text-slate-400 pt-1">Version 1.0 • PT BTJ (Sales Horeca Kino)</p>
+        </div>
+
+        <!-- ACCOUNT SUB-VIEW A: MASTER DATA CUSTOMER -->
+        <div id="subViewMasterCustomer" class="hidden px-3.5 pt-3.5 pb-6 space-y-3.5">
+          <button type="button" class="btn-back-account inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0b57a4]">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            Kembali ke Account
+          </button>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-sm font-extrabold text-slate-900">Master Data Customer</h2>
+                <p class="text-[11px] text-slate-500">Outlet terdaftar otomatis dikenali saat kunjungan (anti dobel NOO)</p>
+              </div>
+              <button type="button" id="btnOpenImportFromCust" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-bold shrink-0">Import Sheet</button>
+            </div>
+
+            <!-- Tambah Customer Cepat -->
+            <form id="addCustomerForm" class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="text-[11px] font-extrabold text-slate-700">+ Tambah Customer Manual</div>
+              <div class="grid grid-cols-2 gap-2">
+                <input id="mcName" type="text" required placeholder="Nama Outlet *" class="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs outline-none" />
+                <select id="mcChannel" class="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs outline-none">
+                  <option value="Rumah Makan">Rumah Makan</option>
+                  <option value="Kafe / Kedai">Kafe / Kedai</option>
+                  <option value="Restoran">Restoran</option>
+                  <option value="Hotel">Hotel</option>
+                  <option value="Kantin / Pujasera">Kantin / Pujasera</option>
+                </select>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <input id="mcAlamat" type="text" placeholder="Alamat / Kecamatan" class="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs outline-none" />
+                <input id="mcWa" type="tel" placeholder="No. WA PIC" class="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs outline-none" />
+              </div>
+              <button type="submit" class="w-full py-2 rounded-lg bg-[#0b57a4] text-white text-xs font-extrabold">Simpan ke Master Customer</button>
+            </form>
+
+            <!-- Search Customer -->
+            <input id="mcSearch" type="search" placeholder="Cari nama customer / alamat..." class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs outline-none focus:border-blue-600" />
+            <div id="masterCustomerList" class="space-y-2 max-h-[24rem] overflow-y-auto"></div>
+          </div>
+        </div>
+
+        <!-- ACCOUNT SUB-VIEW B: MASTER DATA PRODUK -->
+        <div id="subViewMasterProduct" class="hidden px-3.5 pt-3.5 pb-6 space-y-3.5">
+          <button type="button" class="btn-back-account inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0b57a4]">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            Kembali ke Account
+          </button>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3.5">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900">Master Data Produk PT Kino (26 SKU)</h2>
+              <p class="text-[11px] text-slate-500">Edit harga karton atau share katalog bergambar ke WA customer.</p>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
+              <select id="catShareFilter" class="w-full rounded-xl border border-emerald-300 bg-white px-3 py-2 text-xs font-bold outline-none">
+                <option value="minuman">Katalog Minuman (CK3, Cap Panda, Malee)</option>
+                <option value="snack">Katalog Snack & PIA 100</option>
+                <option value="all">Semua 26 Produk PT Kino</option>
+              </select>
+              <input id="custWaTarget" type="tel" inputmode="tel" placeholder="No. WA Customer (opsional, misal 0812xxx)" class="w-full rounded-xl border border-emerald-300 bg-white px-3 py-2 text-xs outline-none" />
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" id="btnShareCatalogImg" class="py-2 px-3 rounded-xl bg-emerald-600 text-white text-xs font-extrabold flex items-center justify-center gap-1.5">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  Share WA + Gambar
+                </button>
+                <button type="button" id="btnDownloadCatalogImg" class="py-2 px-3 rounded-xl bg-white border border-emerald-300 text-emerald-900 text-xs font-bold flex items-center justify-center gap-1.5">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  Download Gambar
+                </button>
+              </div>
+              <div id="catalogPreviewBox" class="hidden pt-2 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold text-emerald-900">Preview Katalog:</span>
+                  <button type="button" id="btnHideCatPreview" class="text-[10px] font-bold text-slate-500">Tutup</button>
+                </div>
+                <canvas id="catalogCanvas" class="w-full rounded-xl border border-emerald-300 bg-white"></canvas>
+              </div>
+            </div>
+
+            <div id="masterProductList" class="divide-y divide-slate-100 max-h-[26rem] overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ANDROID 4-BUTTON BOTTOM NAVIGATION BAR (KUNJUNGAN, ORDER OUTLET, KPI, ACCOUNT) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-30">
+      <div class="bottom-nav-fixed bg-white border-t border-slate-200 px-2 py-1.5 shadow-[0_-4px_20px_rgba(15,23,42,0.08)]">
+        <div class="grid grid-cols-4 gap-1">
+          <button type="button" data-tab="visit" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
+              <i data-lucide="camera" class="w-5 h-5"></i>
+            </div>
+            Kunjungan
+          </button>
+          <button type="button" data-tab="order" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
+              <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            </div>
+            Order Outlet
+          </button>
+          <button type="button" data-tab="kpi" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
+              <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            </div>
+            KPI
+          </button>
+          <button type="button" data-tab="account" class="nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500">
+            <div class="tab-pill px-3.5 py-1 rounded-full mb-0.5 transition-colors">
+              <i data-lucide="user-circle-2" class="w-5 h-5"></i>
+            </div>
+            Account
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- SETTINGS MODAL (GANTI PIN + IMPORT DARI SHEET + SYNC SHEET) -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-end sm:items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl max-h-[90vh] overflow-y-auto p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5 text-[#0b57a4]"></i>
+          <h2 class="text-base font-extrabold text-slate-900">Setting & Synchronize</h2>
+        </div>
+        <button type="button" id="btnCloseSettings" class="p-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- 1. Ganti PIN -->
+      <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+        <h3 class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+          <i data-lucide="lock" class="w-3.5 h-3.5 text-[#0b57a4]"></i>
+          Ganti PIN Login Sales
+        </h3>
+        <div class="grid grid-cols-2 gap-2">
+          <input id="inpOldPin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN Lama" class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs outline-none" />
+          <input id="inpNewPin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN Baru (4-6 angka)" class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs outline-none" />
+        </div>
+        <button type="button" id="btnSavePin" class="w-full py-2 rounded-xl bg-[#0b57a4] text-white text-xs font-extrabold">Simpan PIN Baru</button>
+      </div>
+
+      <!-- 2. Import Data Customer dari Google Sheet / CSV -->
+      <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2.5">
+        <h3 class="text-xs font-extrabold text-emerald-900 flex items-center gap-1.5">
+          <i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-emerald-700"></i>
+          Import Master Customer dari Google Sheet
+        </h3>
+        <p class="text-[11px] text-emerald-800 leading-snug">Masukkan data outlet yang sudah ada dari Google Sheet agar otomatis dikenali sebagai toko lama.</p>
+
+        <label for="fImportCsv" class="cursor-pointer w-full py-2 px-3 rounded-xl bg-white border border-emerald-300 text-emerald-900 text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-emerald-100">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+          Pilih File CSV dari Google Sheet
+          <input id="fImportCsv" type="file" accept=".csv,text/csv" class="hidden" />
+        </label>
+
+        <div class="flex gap-1.5">
+          <input id="inpSheetCsvUrl" type="url" placeholder="Atau tempel link Publish CSV Google Sheet..." class="flex-1 rounded-xl border border-emerald-300 bg-white px-2.5 py-2 text-[11px] outline-none" />
+          <button type="button" id="btnFetchSheetCsv" class="px-3 py-2 rounded-xl bg-emerald-700 text-white text-[11px] font-bold shrink-0">Tarik</button>
+        </div>
+
+        <textarea id="inpPasteSheet" rows="3" placeholder="Atau copy-paste baris dari Google Sheet:&#10;Kantin Mama Arafah, Kantin, Jl. Cikutra, Cibeunying Kidul, Bu Arafah, 0812xxx" class="w-full rounded-xl border border-emerald-300 bg-white px-2.5 py-2 text-[11px] outline-none"></textarea>
+        <button type="button" id="btnImportPasted" class="w-full py-2 rounded-xl bg-emerald-600 text-white text-xs font-extrabold">Import Data yang Di-Paste</button>
+      </div>
+
+      <!-- 3. Sync & Export Google Sheet SPV -->
+      <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-extrabold text-slate-900">Sync Otomatis ke Sheet SPV</h3>
+          <a href="https://docs.google.com/spreadsheets/d/1Hf9VrpwlMqhn2ygzT65aPZbTZDBGqh5w6BLxbWQ79VE/edit" target="_blank" rel="noopener noreferrer" class="text-[11px] font-bold text-[#0b57a4] underline">Buka Sheet SPV</a>
+        </div>
+        <div class="flex gap-1.5">
+          <input id="fWebhookUrl" type="url" placeholder="URL Apps Script (https://script.google.com/.../exec)" class="flex-1 rounded-xl border border-slate-300 bg-white px-2.5 py-2 text-[11px] outline-none" />
+          <button type="button" id="btnSaveWebhook" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-[11px] font-bold shrink-0">Simpan</button>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" id="btnExportCsv" class="py-2 rounded-xl bg-white border border-slate-300 text-slate-800 text-[11px] font-bold">Export CSV</button>
+          <button type="button" id="btnCopyScript" class="py-2 rounded-xl bg-white border border-slate-300 text-slate-800 text-[11px] font-bold">Copy Apps Script</button>
+        </div>
+        <button type="button" id="btnResetAllData" class="w-full py-2 rounded-xl bg-red-50 text-red-700 border border-red-200 text-[11px] font-bold">Reset Semua Data Lokal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE INFO MODAL -->
+  <div id="profileModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <h3 class="text-sm font-extrabold text-slate-900">My Profile</h3>
+        <button type="button" id="btnCloseProfile" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <div class="space-y-2 text-xs">
+        <div class="flex justify-between"><span class="text-slate-500">Nama Sales</span><strong class="text-slate-900">YULLI PRATIWI</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Kode Sales</span><strong class="font-mono text-slate-900">3355IR6103</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Distributor</span><strong class="text-slate-900">PT BTJ (Banceuy Tunggal Jaya)</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Divisi</span><strong class="text-slate-900">Sales Horeca PT Kino</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">Area Garapan</span><strong class="text-[#0b57a4]">Bandung Kota (30 Kec)</strong></div>
+      </div>
+      <button type="button" id="btnOkProfile" class="w-full py-2 rounded-xl bg-[#0b57a4] text-white text-xs font-bold">Tutup</button>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-3">
+      <h3 class="text-base font-extrabold text-slate-900" id="modalTitle">Konfirmasi</h3>
+      <p class="text-xs text-slate-600" id="modalMsg">Yakin ingin melanjutkan?</p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" id="modalCancel" class="px-3.5 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold">Batal</button>
+        <button type="button" id="modalConfirm" class="px-3.5 py-2 rounded-xl bg-red-600 text-white text-xs font-bold">Ya, Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-20 left-4 right-4 max-w-sm mx-auto z-50 pointer-events-none opacity-0 transition-opacity duration-200">
+    <div class="bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-2">
+      <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+      <span id="toastText">Berhasil</span>
+    </div>
+  </div>
+
+  <script>
+    function safeIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        try { window.lucide.createIcons(); } catch (e) {}
+      }
+    }
+
+    const DEFAULT_SALES = {
+      'Yulli Pratiwi': { area: 'Bandung Kota', code: '3355IR6103', pin: '1234' }
+    };
+
+    const KECAMATAN_BANDUNG = [
+      'Andir','Antapani','Arcamanik','Astana Anyar','Babakan Ciparay','Bandung Kidul',
+      'Bandung Kulon','Bandung Wetan','Batununggal','Bojongloa Kaler','Bojongloa Kidul',
+      'Buahbatu','Cibeunying Kaler','Cibeunying Kidul','Cibiru','Cicendo','Cidadap',
+      'Cinambo','Coblong','Gedebage','Kiaracondong','Lengkong','Mandalajati',
+      'Panyileukan','Rancasari','Regol','Sukajadi','Sukasari','Sumur Bandung','Ujungberung'
+    ];
+
+    const DEFAULT_PRODUCTS = [
+      { id: 'ck3_p200', group: 'minuman', cat: 'Larutan Cap Kaki Tiga', name: 'CK3 Plain 200ml', shortName: 'CK3 Plain 200ml', unit: 'ctn (48 pcs)', packSize: 48, price: 157000, accent: '#0284c7' },
+      { id: 'ck3_p500', group: 'minuman', cat: 'Larutan Cap Kaki Tiga', name: 'CK3 Plain 500ml', shortName: 'CK3 Plain 500ml', unit: 'ctn (24 pcs)', packSize: 24, price: 160000, accent: '#0284c7' },
+      { id: 'ck3_pet320', group: 'minuman', cat: 'Larutan Cap Kaki Tiga', name: 'CK3 PET Flavors 320ml (Guava/Lychee/Orange)', shortName: 'CK3 PET', unit: 'ctn (24 pcs)', packSize: 24, price: 137000, accent: '#16a34a' },
+      { id: 'ck3_can320', group: 'minuman', cat: 'Larutan Cap Kaki Tiga', name: 'CK3 Can Flavors 320ml (All Variant)', shortName: 'CK3', unit: 'ctn (24 pcs)', packSize: 24, price: 134000, accent: '#dc2626' },
+      { id: 'cooltopia', group: 'minuman', cat: 'Larutan Cap Kaki Tiga', name: 'Cooltopia Can 320ml', shortName: 'Cooltopia', unit: 'ctn (24 pcs)', packSize: 24, price: 134000, accent: '#0d9488' },
+      { id: 'ck3a_p200', group: 'minuman', cat: 'Cap Kaki Tiga Anak', name: 'CK3 Anak Plain 200ml', shortName: 'CK3 Anak Plain', unit: 'ctn (48 pcs)', packSize: 48, price: 160000, accent: '#ec4899' },
+      { id: 'ck3a_b250', group: 'minuman', cat: 'Cap Kaki Tiga Anak', name: 'CK3 Anak Botol Flavors 250ml', shortName: 'CK3 Anak Botol', unit: 'ctn (24 pcs)', packSize: 24, price: 124000, accent: '#ec4899' },
+      { id: 'ck3a_c238', group: 'minuman', cat: 'Cap Kaki Tiga Anak', name: 'CK3 Anak Flavors Can 238ml', shortName: 'CK3 Anak Can', unit: 'ctn (24 pcs)', packSize: 24, price: 124000, accent: '#f97316' },
+      { id: 'cappanda', group: 'minuman', cat: 'Cap Panda', name: 'Cap Panda All Variant 320ml (Cincau/Liang Tea/Bird Nest)', shortName: 'Panda', unit: 'ctn (24 pcs)', packSize: 24, price: 130000, accent: '#1e293b' },
+      { id: 'malee_ra200', group: 'minuman', cat: 'Malee', name: 'Malee Juice Red Apple 200ml', shortName: 'Malee Apple 200ml', unit: 'ctn (12 pcs)', packSize: 12, price: 194568, accent: '#b91c1c' },
+      { id: 'malee_ra1000', group: 'minuman', cat: 'Malee', name: 'Malee Juice Red Apple 1000ml', shortName: 'Malee Apple 1L', unit: 'ctn (12 pcs)', packSize: 12, price: 551760, accent: '#b91c1c' },
+      { id: 'malee_mo200', group: 'minuman', cat: 'Malee', name: 'Malee Juice Mandarin Orange 200ml', shortName: 'Malee Orange 200ml', unit: 'ctn (24 pcs)', packSize: 24, price: 194568, accent: '#ea580c' },
+      { id: 'malee_mo1000', group: 'minuman', cat: 'Malee', name: 'Malee Juice Mandarin Orange 1000ml', shortName: 'Malee Orange 1L', unit: 'ctn (12 pcs)', packSize: 12, price: 609840, accent: '#ea580c' },
+      { id: 'malee_c330', group: 'minuman', cat: 'Malee', name: 'Malee Coconut 330ml', shortName: 'Malee Coconut 330ml', unit: 'ctn (12 pcs)', packSize: 12, price: 223200, accent: '#15803d' },
+      { id: 'malee_c1000', group: 'minuman', cat: 'Malee', name: 'Malee Coconut 1000ml', shortName: 'Malee Coconut 1L', unit: 'ctn (12 pcs)', packSize: 12, price: 501600, accent: '#15803d' },
+      { id: 'malee_cf_rl', group: 'minuman', cat: 'Malee', name: 'Malee Canned Fruit 565g (Rambutan & Leci)', shortName: 'Malee Canned R/L', unit: 'ctn (24 pcs)', packSize: 24, price: 1032000, accent: '#be123c' },
+      { id: 'malee_cf_lg', group: 'minuman', cat: 'Malee', name: 'Malee Canned Fruit 565g (Longan)', shortName: 'Malee Longan', unit: 'ctn (24 pcs)', packSize: 24, price: 912000, accent: '#b45309' },
+      { id: 'nastar', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'Kino Nastar Festive (Nanas & Coklat)', shortName: 'Nastar Festive', unit: 'ctn (6 tpl)', packSize: 6, price: 130000, accent: '#a16207' },
+      { id: 'chocodip', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'Marshmallow with Chocodip 30g (Train & Gawn)', shortName: 'Chocodip', unit: 'ctn (36 bags)', packSize: 36, price: 175500, accent: '#7c3aed' },
+      { id: 'cheewy', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'Kino Cheewy Bags (Durian & Mango)', shortName: 'Cheewy', unit: 'ctn (24 bags)', packSize: 24, price: 132000, accent: '#ca8a04' },
+      { id: 'pia23', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'PIA 100 23g @ 1pcs (Coklat/K.Hijau/Nanas)', shortName: 'PIA 23g', unit: 'ctn (48 pcs)', packSize: 48, price: 48000, accent: '#15803d' },
+      { id: 'pia75', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'PIA 100 75g @ 3pcs (Pandan/K.Hijau/Coklat)', shortName: 'PIA 75g', unit: 'ctn (24 pcs)', packSize: 24, price: 140136, accent: '#15803d' },
+      { id: 'pia150', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'PIA 100 150g @ 6pcs (Pandan/K.Hijau/Coklat)', shortName: 'PIA 150g', unit: 'ctn (12 pcs)', packSize: 12, price: 133200, accent: '#15803d' },
+      { id: 'minitwist', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'Snackit Mini Twist 5g (20 Bags/Ctn)', shortName: 'Mini Twist', unit: 'ctn (20 bags)', packSize: 20, price: 184400, accent: '#2563eb' },
+      { id: 'longtwist', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'Snackit Long Twist 55g (4 Bulks/Ctn)', shortName: 'Long Twist', unit: 'ctn (4 bulks)', packSize: 4, price: 182760, accent: '#db2777' },
+      { id: 'bagshaped', group: 'snack', cat: 'Kino Snack & PIA 100', name: 'Snackit Marshmallow Bag Shaped (30 Bags/Ctn)', shortName: 'Marshmallow Bag', unit: 'ctn (30 bags)', packSize: 30, price: 207000, accent: '#9333ea' }
+    ];
+
+    const APPS_SCRIPT_CODE = `function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Log Kunjungan');
+  var d = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    d.timestamp, d.date, d.day, d.kecamatan, d.outlet, d.channel,
+    d.pic, d.status, d.isNoo ? 'NOO Baru' : 'Outlet Lama/Prospek',
+    d.followUpInfo || '-', Number(d.orderTotal || 0), d.caption, d.hasPhoto ? 'Sudah Foto GPS' : 'Belum'
+  ]);
+  return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(ContentService.MimeType.JSON);
+}`;
+
+    const STORAGE_KEY = 'btj_kino_android_v6';
+
+    let state = {
+      salesDir: JSON.parse(JSON.stringify(DEFAULT_SALES)),
+      loggedInSales: null,
+      activeTab: 'visit',
+      accountSubView: 'home', // 'home' | 'customer' | 'product'
+      orderSubTab: 'outlets',
+      selectedStatus: 'Closing',
+      selectedExistingOutletId: null,
+      rawImageObj: null,
+      lastStampedDataUrl: '',
+      lastSavedCaption: '',
+      lastSavedOutletName: '',
+      activeOrderIsNewNoo: true,
+      cart: [],
+      activeOrderOutletId: null,
+      webhookUrl: '',
+      targets: { omzet: 100000000, oa: 30, noo: 30 },
+      products: JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
+      outlets: [],
+      visits: [],
+      orders: []
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const p = JSON.parse(raw);
+          if (p.salesDir) state.salesDir = { ...state.salesDir, ...p.salesDir };
+          if (p.loggedInSales) state.loggedInSales = p.loggedInSales;
+          if (Array.isArray(p.outlets)) state.outlets = p.outlets;
+          if (Array.isArray(p.visits)) state.visits = p.visits;
+          if (Array.isArray(p.orders)) state.orders = p.orders;
+          if (Array.isArray(p.products) && p.products.length > 0) state.products = p.products;
+          if (typeof p.webhookUrl === 'string') state.webhookUrl = p.webhookUrl;
+          if (p.targets) state.targets = { ...state.targets, ...p.targets };
+        }
+      } catch (e) {}
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          salesDir: state.salesDir,
+          loggedInSales: state.loggedInSales,
+          outlets: state.outlets,
+          visits: state.visits,
+          orders: state.orders,
+          products: state.products,
+          webhookUrl: state.webhookUrl,
+          targets: state.targets
+        }));
+      } catch (e) {}
+    }
+
+    function fmtRp(n) { return 'Rp ' + Math.round(Number(n) || 0).toLocaleString('id-ID'); }
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function nowTimeStr() {
+      const d = new Date();
+      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+    function addDaysFrom(dateStr, days) {
+      const d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
+      d.setDate(d.getDate() + days);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function formatStampDateTime(dateStr, timeStr) {
+      const d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
+      const shortDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const dayLabel = shortDays[d.getDay()] || 'Thu';
+      const [hhRaw, mmRaw] = (timeStr || '09:00').split(':');
+      let hh = parseInt(hhRaw, 10);
+      if (isNaN(hh)) hh = 9;
+      const mm = mmRaw || '00';
+      const ampm = hh >= 12 ? 'pm' : 'am';
+      const hh12 = hh % 12 === 0 ? 12 : hh % 12;
+      return `${dateStr || todayStr()}(${dayLabel})  ${String(hh12).padStart(2,'0')}:${mm} ${ampm}`;
+    }
+    function dayNameId(dateStr) {
+      const d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
+      return ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][d.getDay()];
+    }
+    function cleanWaNumber(raw) {
+      const digits = (raw || '').replace(/[^0-9]/g, '');
+      return digits.startsWith('0') ? '62' + digits.slice(1) : digits;
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      document.getElementById('toastText').textContent = msg;
+      el.classList.remove('opacity-0');
+      el.classList.add('opacity-100');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        el.classList.remove('opacity-100');
+        el.classList.add('opacity-0');
+      }, 3000);
+    }
+
+    function copyText(text, msg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(msg || 'Tersalin!')).catch(() => fallbackCopy(text, msg));
+      } else {
+        fallbackCopy(text, msg);
+      }
+    }
+    function fallbackCopy(text, msg) {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); showToast(msg || 'Tersalin!'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    let modalCb = null;
+    function openModal(title, msg, cb) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMsg').textContent = msg;
+      modalCb = cb;
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    async function pushToSheet(payload) {
+      if (!state.webhookUrl || !state.webhookUrl.startsWith('https://')) return;
+      try {
+        await fetch(state.webhookUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+      } catch (e) {}
+    }
+
+    function parseAndImportOutlets(rawText) {
+      const lines = (rawText || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      if (lines.length === 0) return 0;
+      let added = 0;
+      lines.forEach((line, idx) => {
+        const delim = line.includes('\t') ? '\t' : ',';
+        const cols = line.split(delim).map(c => c.replace(/^"|"$/g, '').trim());
+        const name = cols[0];
+        if (!name) return;
+        if (idx === 0 && /nama\s*outlet|outlet|toko|customer/i.test(name)) return;
+        if (!state.outlets.find(o => o.name.toLowerCase() === name.toLowerCase())) {
+          state.outlets.unshift({
+            id: 'imp_' + Date.now() + '_' + idx,
+            name,
+            channel: cols[1] || 'Rumah Makan',
+            alamat: cols[2] || 'Bandung Kota',
+            kecamatan: KECAMATAN_BANDUNG.includes(cols[3]) ? cols[3] : 'Sukasari',
+            picName: cols[4] || '',
+            picWa: cols[5] || '',
+            isNoo: true,
+            createdDate: todayStr()
+          });
+          added++;
+        }
+      });
+      if (added > 0) { saveState(); renderAll(); }
+      return added;
+    }
+
+    function computeKpiStats() {
+      const t = todayStr();
+      const todayVisits = state.visits.filter(v => v.date === t).length;
+      const todayOmzet = state.orders.filter(o => o.date === t).reduce((s, o) => s + (Number(o.total) || 0), 0);
+      const totalOmzet = state.orders.reduce((s, o) => s + (Number(o.total) || 0), 0);
+      const oaCount = new Set(state.orders.map(o => o.outletId)).size;
+      const nooCount = state.outlets.filter(o => o.isNoo).length;
+
+      const tgtOmzet = Math.max(1, Number(state.targets.omzet) || 100000000);
+      const tgtOa = Math.max(1, Number(state.targets.oa) || 30);
+      const tgtNoo = Math.max(1, Number(state.targets.noo) || 30);
+
+      return {
+        todayVisits, todayOmzet, totalOmzet, oaCount, nooCount,
+        tgtOmzet, tgtOa, tgtNoo,
+        pctTodayVisit: Math.min(100, Math.round((todayVisits / 15) * 100)),
+        pctOmzet: Math.round((totalOmzet / tgtOmzet) * 1000) / 10,
+        pctOa: Math.round((oaCount / tgtOa) * 1000) / 10,
+        pctNoo: Math.round((nooCount / tgtNoo) * 1000) / 10
+      };
+    }
+
+    function buildVisitCaption(outletName, status, note, isExistingOutlet) {
+      const o = outletName || '[Nama Outlet]';
+      if (status === 'Closing') return isExistingOutlet ? `${o} / kunjungan / [pilih barang di order]` : `${o} / kunjungan / NOO / [pilih barang di order]`;
+      return `${o} / kunjungan / ${note && note.trim() ? note.trim() : status.toLowerCase()}`;
+    }
+
+    function buildOrderCaption(outletName, isNewNoo, items) {
+      const o = outletName || '[Nama Outlet]';
+      const summary = items.length > 0
+        ? items.map(it => {
+            const v = it.variant ? ` ${it.variant}` : '';
+            return it.unitType === 'pcs' ? `${it.qty} pcs ${it.shortName}${v}` : `${it.shortName} ${it.qty} karton${v}`;
+          }).join(', ')
+        : '[pilih produk]';
+      return isNewNoo ? `${o} / kunjungan / NOO / ${summary}` : `${o} / kunjungan / ${summary}`;
+    }
+
+    function drawProductCardCanvas(productsList, titleText) {
+      const canvas = document.getElementById('catalogCanvas');
+      const ctx = canvas.getContext('2d');
+      const isSingle = productsList.length === 1;
+      const W = 900, rowH = isSingle ? 320 : 58, headerH = 155, footerH = 88;
+      const H = headerH + productsList.length * rowH + footerH + 30;
+      canvas.width = W; canvas.height = H;
+
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+      const grad = ctx.createLinearGradient(0, 0, W, headerH);
+      grad.addColorStop(0, '#0b57a4'); grad.addColorStop(1, '#2563eb');
+      ctx.fillStyle = grad; ctx.fillRect(0, 0, W, headerH);
+
+      ctx.fillStyle = '#93c5fd'; ctx.font = 'bold 20px sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText('PT BANCEUY TUNGGAL JAYA (BTJ) • HORECA BANDUNG', 40, 48);
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 34px sans-serif';
+      ctx.fillText(titleText, 40, 96);
+      ctx.fillStyle = '#dbeafe'; ctx.font = '18px sans-serif';
+      ctx.fillText(`Sales: ${state.loggedInSales || 'Yulli Pratiwi'} • PT Kino Indonesia`, 40, 130);
+
+      if (isSingle) {
+        const p = productsList[0], y0 = headerH + 30;
+        ctx.fillStyle = '#f8fafc'; ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 2;
+        ctx.fillRect(40, y0, W - 80, 270); ctx.strokeRect(40, y0, W - 80, 270);
+        ctx.fillStyle = p.accent || '#0b57a4'; ctx.fillRect(40, y0, 18, 270);
+        ctx.font = 'bold 20px sans-serif'; ctx.fillText(p.cat.toUpperCase(), 82, y0 + 50);
+        ctx.fillStyle = '#0f172a'; ctx.font = 'bold 32px sans-serif'; ctx.fillText(p.name.slice(0, 42), 82, y0 + 102);
+        ctx.fillStyle = '#475569'; ctx.font = '22px sans-serif'; ctx.fillText(`Kemasan: 1 ${p.unit}`, 82, y0 + 146);
+        ctx.fillStyle = '#047857'; ctx.font = 'bold 46px sans-serif'; ctx.fillText(`${fmtRp(p.price)} / ctn`, 82, y0 + 215);
+        ctx.fillStyle = '#64748b'; ctx.font = 'bold 20px sans-serif'; ctx.fillText(`(Estimasi satuan: ${fmtRp(Math.round(p.price / (p.packSize || 24)))} / pcs)`, 82, y0 + 250);
+      } else {
+        let y = headerH + 20;
+        productsList.forEach((p, idx) => {
+          ctx.fillStyle = idx % 2 === 0 ? '#f8fafc' : '#ffffff';
+          ctx.fillRect(30, y, W - 60, rowH);
+          ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.strokeRect(30, y, W - 60, rowH);
+          ctx.fillStyle = p.accent || '#0b57a4'; ctx.fillRect(30, y, 8, rowH);
+          ctx.fillStyle = '#0f172a'; ctx.font = 'bold 20px sans-serif'; ctx.textAlign = 'left';
+          ctx.fillText(`${idx + 1}. ${p.name.length > 44 ? p.name.slice(0, 42) + '...' : p.name}`, 52, y + 26);
+          ctx.fillStyle = '#64748b'; ctx.font = '15px sans-serif'; ctx.fillText(`${p.cat} • 1 ${p.unit}`, 52, y + 48);
+          ctx.fillStyle = '#047857'; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'right';
+          ctx.fillText(`${fmtRp(p.price)}/ctn`, W - 48, y + 36);
+          y += rowH;
+        });
+      }
+
+      const fy = H - footerH;
+      ctx.fillStyle = '#0f172a'; ctx.fillRect(0, fy, W, footerH);
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText('Siap Kirim Area Bandung Kota • Support POSM Rumah Makan (Taplak/Asbak)', 40, fy + 38);
+      ctx.fillStyle = '#94a3b8'; ctx.font = '16px sans-serif';
+      ctx.fillText(`PT BTJ (Sales Horeca Kino) • Update: ${todayStr()}`, 40, fy + 66);
+
+      document.getElementById('catalogPreviewBox').classList.remove('hidden');
+      return canvas.toDataURL('image/jpeg', 0.92);
+    }
+
+    async function shareCatalogToCustomer(productsList, titleText, fileSlug) {
+      const dataUrl = drawProductCardCanvas(productsList, titleText);
+      const waTarget = cleanWaNumber(document.getElementById('custWaTarget').value.trim());
+      const lines = [`Halo Bapak/Ibu, berikut daftar harga produk *PT Kino Indonesia* dari *PT BTJ (Sales Horeca Kino Bandung)*:`, ``];
+      productsList.forEach(p => lines.push(`• *${p.name}*: ${fmtRp(p.price)} / ${p.unit}`));
+      lines.push(``, `Hubungi ${state.loggedInSales || 'Yulli Pratiwi'} untuk order & promo support rumah makan.`);
+      const waMsg = lines.join('\n');
+      copyText(waMsg, 'Pesan katalog disalin!');
+
+      if (navigator.share) {
+        try {
+          const res = await fetch(dataUrl);
+          const blob = await res.blob();
+          const file = new File([blob], `${fileSlug}.jpg`, { type: 'image/jpeg' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], text: waMsg, title: titleText });
+            return;
+          }
+        } catch (e) {}
+      }
+
+      const a = document.createElement('a'); a.href = dataUrl; a.download = `${fileSlug}.jpg`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      const waUrl = waTarget.length >= 9 ? `https://wa.me/${waTarget}?text=${encodeURIComponent(waMsg)}` : `https://wa.me/?text=${encodeURIComponent(waMsg)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+      showToast('Gambar katalog di-download & WA dibuka!');
+    }
+
+    function renderStampedPhoto() {
+      if (!state.rawImageObj) return;
+      const canvas = document.getElementById('stampCanvas');
+      const ctx = canvas.getContext('2d');
+      const img = state.rawImageObj;
+      const targetW = Math.min(1200, img.naturalWidth || 1200);
+      const scale = targetW / (img.naturalWidth || 1200);
+      const targetH = Math.round((img.naturalHeight || 900) * scale);
+      canvas.width = targetW; canvas.height = targetH;
+      ctx.drawImage(img, 0, 0, targetW, targetH);
+
+      const barH = Math.max(210, Math.round(targetH * 0.31));
+      const barY = targetH - barH, mapW = Math.round(targetW * 0.25);
+
+      ctx.save();
+      ctx.fillStyle = '#e8eef5'; ctx.fillRect(0, barY, mapW, barH);
+      ctx.fillStyle = '#d6e4d2';
+      ctx.fillRect(mapW * 0.08, barY + barH * 0.12, mapW * 0.32, barH * 0.25);
+      ctx.fillRect(mapW * 0.58, barY + barH * 0.55, mapW * 0.35, barH * 0.28);
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(4, targetW * 0.005);
+      ctx.beginPath(); ctx.moveTo(0, barY + barH * 0.35); ctx.lineTo(mapW, barY + barH * 0.65); ctx.moveTo(mapW * 0.45, barY); ctx.lineTo(mapW * 0.32, targetH); ctx.stroke();
+      ctx.strokeStyle = '#fcd34d'; ctx.lineWidth = Math.max(5, targetW * 0.006);
+      ctx.beginPath(); ctx.moveTo(0, barY + barH * 0.75); ctx.lineTo(mapW, barY + barH * 0.22); ctx.stroke();
+
+      const pinX = mapW * 0.5, pinY = barY + barH * 0.48, pinR = Math.max(10, mapW * 0.065);
+      ctx.fillStyle = '#dc2626'; ctx.beginPath(); ctx.arc(pinX, pinY - pinR, pinR, Math.PI, 0, false); ctx.lineTo(pinX, pinY + pinR * 1.1); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(pinX, pinY - pinR, pinR * 0.38, 0, Math.PI * 2); ctx.fill();
+
+      const coords = document.getElementById('fCoords').value.trim();
+      ctx.fillStyle = 'rgba(15,23,42,0.75)'; ctx.font = `bold ${Math.max(11, Math.round(targetW * 0.011))}px sans-serif`;
+      ctx.fillText(coords || 'Bandung, ID', 8, targetH - 10);
+      ctx.restore();
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(20, 24, 30, 0.72)'; ctx.fillRect(mapW, barY, targetW - mapW, barH);
+      const padX = Math.round(targetW * 0.022), rightColW = Math.round(targetW * 0.14);
+      const kec = document.getElementById('fKecamatan').value || 'Sukasari';
+      const alamat = document.getElementById('fAlamat').value.trim() || `Kec. ${kec}, Kota Bandung, Jawa Barat, Indonesia`;
+      const dtText = formatStampDateTime(document.getElementById('fDate').value, document.getElementById('fTime').value);
+
+      ctx.fillStyle = '#f8fafc'; ctx.font = `${Math.max(13, Math.round(targetW * 0.0155))}px Georgia, serif`; ctx.textAlign = 'left';
+      ctx.fillText(alamat.length > 78 ? alamat.slice(0, 75) + '...' : alamat, mapW + padX, barY + barH * 0.16);
+
+      const centerX = mapW + (targetW - mapW - rightColW) * 0.5;
+      ctx.font = `bold ${Math.max(24, Math.round(targetW * 0.032))}px Georgia, serif`; ctx.textAlign = 'center'; ctx.fillStyle = '#ffffff';
+      ctx.fillText(`Kecamatan ${kec}`, centerX, barY + barH * 0.39);
+      ctx.fillText('Jawa Barat', centerX, barY + barH * 0.57);
+      ctx.fillText('Indonesia', centerX, barY + barH * 0.74);
+
+      ctx.font = `${Math.max(18, Math.round(targetW * 0.024))}px Georgia, serif`; ctx.fillStyle = '#f1f5f9';
+      ctx.fillText(dtText, centerX, barY + barH * 0.91);
+
+      const wxX = targetW - rightColW * 0.5;
+      ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(wxX + 14, barY + barH * 0.24, Math.max(10, targetW * 0.013), 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#e2e8f0'; ctx.beginPath(); ctx.arc(wxX - 4, barY + barH * 0.29, Math.max(12, targetW * 0.015), 0, Math.PI * 2); ctx.arc(wxX + 10, barY + barH * 0.30, Math.max(10, targetW * 0.012), 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff'; ctx.font = `bold ${Math.max(20, Math.round(targetW * 0.025))}px Georgia, serif`;
+      ctx.fillText('28°C', wxX, barY + barH * 0.68);
+      ctx.fillText('82°F', wxX, barY + barH * 0.88);
+      ctx.restore();
+
+      try { state.lastStampedDataUrl = canvas.toDataURL('image/jpeg', 0.9); } catch (e) {}
+    }
+
+    function downloadStampedPhoto(customName) {
+      if (!state.lastStampedDataUrl) { showToast('Ambil foto kunjungan dulu.'); return; }
+      const a = document.createElement('a'); a.href = state.lastStampedDataUrl;
+      a.download = `GPS_${(customName || document.getElementById('fOutlet').value.trim() || 'kunjungan').replace(/[^a-zA-Z0-9]+/g, '_')}_${document.getElementById('fDate').value || todayStr()}.jpg`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      showToast('Foto stempel GPS di-download!');
+    }
+
+    async function shareStampedPhotoAndCaption(captionText, outletName) {
+      const cap = captionText || state.lastSavedCaption || document.getElementById('liveAutoCaption').textContent;
+      copyText(cap, 'Caption WA disalin!');
+      if (state.lastStampedDataUrl && navigator.share) {
+        try {
+          const res = await fetch(state.lastStampedDataUrl);
+          const blob = await res.blob();
+          const file = new File([blob], `GPS_${(outletName || 'kunjungan').replace(/[^a-zA-Z0-9]+/g, '_')}.jpg`, { type: 'image/jpeg' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], text: cap, title: 'Laporan Kunjungan Horeca' });
+            return;
+          }
+          await navigator.share({ text: cap, title: 'Laporan Kunjungan Horeca' });
+          return;
+        } catch (err) {}
+      }
+      if (state.lastStampedDataUrl) downloadStampedPhoto(outletName);
+      else window.open(`https://wa.me/?text=${encodeURIComponent(cap)}`, '_blank', 'noopener,noreferrer');
+    }
+
+    function updateDraftCaption() {
+      const outlet = document.getElementById('fOutlet').value.trim();
+      const note = document.getElementById('fNote').value.trim();
+      const existing = state.selectedExistingOutletId
+        ? state.outlets.find(o => o.id === state.selectedExistingOutletId)
+        : state.outlets.find(o => o.name.toLowerCase() === outlet.toLowerCase());
+      document.getElementById('liveAutoCaption').textContent = buildVisitCaption(outlet, state.selectedStatus, note, !!(existing && existing.isNoo));
+    }
+
+    function updateOrderCaptionPreview() {
+      const oid = document.getElementById('oOutletSelect').value;
+      const outlet = state.outlets.find(o => o.id === oid);
+      const isNewNoo = outlet ? (state.activeOrderOutletId === outlet.id ? state.activeOrderIsNewNoo : !outlet.isNoo) : true;
+      document.getElementById('liveOrderCaption').textContent = buildOrderCaption(outlet ? outlet.name : '', isNewNoo, state.cart);
+    }
+
+    function showAuthOrApp() {
+      if (state.loggedInSales && state.salesDir[state.loggedInSales]) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('appShell').classList.remove('hidden');
+        document.getElementById('hdrSalesSub').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-300 inline-block"></span> ${state.loggedInSales} • ${state.salesDir[state.loggedInSales].area}`;
+        document.getElementById('accSalesName').textContent = state.loggedInSales.toUpperCase();
+        setTab(state.activeTab);
+      } else {
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('appShell').classList.add('hidden');
+      }
+      safeIcons();
+    }
+
+    function setTab(tab) {
+      state.activeTab = tab;
+      if (tab === 'account') state.accountSubView = 'home';
+
+      document.querySelectorAll('.view-section').forEach(s => s.classList.add('hidden'));
+      const target = document.getElementById(`view-${tab}`);
+      if (target) target.classList.remove('hidden');
+
+      // Hide default top header only when on Account Home (so reference blue profile header is at top!)
+      const topHdr = document.getElementById('mainTopHeader');
+      if (tab === 'account' && state.accountSubView === 'home') topHdr.classList.add('hidden');
+      else topHdr.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab-btn').forEach(b => {
+        b.className = b.dataset.tab === tab
+          ? 'nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold tab-active'
+          : 'nav-tab-btn flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-slate-500';
+      });
+      renderAll();
+    }
+
+    function setAccountSubView(sub) {
+      state.accountSubView = sub;
+      document.getElementById('accountHomeView').classList.toggle('hidden', sub !== 'home');
+      document.getElementById('subViewMasterCustomer').classList.toggle('hidden', sub !== 'customer');
+      document.getElementById('subViewMasterProduct').classList.toggle('hidden', sub !== 'product');
+      const topHdr = document.getElementById('mainTopHeader');
+      if (state.activeTab === 'account' && sub === 'home') topHdr.classList.add('hidden');
+      else topHdr.classList.remove('hidden');
+      renderAll();
+    }
+
+    function renderTopKpis() {
+      const k = computeKpiStats();
+      document.getElementById('topKpiVisits').textContent = `${k.todayVisits}/15`;
+      document.getElementById('topKpiNoo').textContent = `${k.pctNoo}%`;
+      document.getElementById('topKpiOa').textContent = `${k.pctOa}%`;
+      document.getElementById('topKpiOmzet').textContent = `${k.pctOmzet}%`;
+
+      // Account Sales Performance Donuts
+      document.getElementById('donutToday').style.background = `conic-gradient(#f59e0b ${k.pctTodayVisit}%, #e2e8f0 ${k.pctTodayVisit}%)`;
+      document.getElementById('donutTodayText').textContent = `${k.pctTodayVisit}%`;
+      document.getElementById('perfTodayTgt').textContent = '15 Outlet';
+      document.getElementById('perfTodayAct').textContent = `${k.todayVisits} / ${fmtRp(k.todayOmzet)}`;
+
+      const mtdPct = Math.min(100, Math.round(k.pctOmzet));
+      document.getElementById('donutMtd').style.background = `conic-gradient(#10b981 ${mtdPct}%, #e2e8f0 ${mtdPct}%)`;
+      document.getElementById('donutMtdText').textContent = `${k.pctOmzet}%`;
+      document.getElementById('perfMtdTgt').textContent = fmtRp(k.tgtOmzet);
+      document.getElementById('perfMtdAct').textContent = fmtRp(k.totalOmzet);
+      document.getElementById('perfMtdNooOa').textContent = `${k.nooCount} NOO / ${k.oaCount} OA`;
+
+      document.getElementById('badgeMasterCustCount').textContent = state.outlets.length;
+      const fuCount = state.visits.filter(v => v.status === 'Minat / Follow-up').length;
+      document.getElementById('accBellBadge').classList.toggle('hidden', fuCount === 0);
+    }
+
+    function renderKpiTab() {
+      const k = computeKpiStats();
+      document.getElementById('kpiPctOmzet').textContent = `${k.pctOmzet}%`;
+      document.getElementById('kpiBarOmzet').style.width = `${Math.min(100, k.pctOmzet)}%`;
+      document.getElementById('kpiValOmzet').textContent = fmtRp(k.totalOmzet);
+      document.getElementById('kpiTgtOmzetLabel').textContent = fmtRp(k.tgtOmzet);
+
+      document.getElementById('kpiPctOa').textContent = `${k.pctOa}%`;
+      document.getElementById('kpiBarOa').style.width = `${Math.min(100, k.pctOa)}%`;
+      document.getElementById('kpiValOa').textContent = `${k.oaCount} outlet`;
+      document.getElementById('kpiTgtOaLabel').textContent = `${k.tgtOa} outlet`;
+
+      document.getElementById('kpiPctNoo').textContent = `${k.pctNoo}%`;
+      document.getElementById('kpiBarNoo').style.width = `${Math.min(100, k.pctNoo)}%`;
+      document.getElementById('kpiValNoo').textContent = `${k.nooCount} outlet`;
+      document.getElementById('kpiTgtNooLabel').textContent = `${k.tgtNoo} outlet`;
+
+      document.getElementById('inpTgtOmzet').value = k.tgtOmzet;
+      document.getElementById('inpTgtOa').value = k.tgtOa;
+      document.getElementById('inpTgtNoo').value = k.tgtNoo;
+    }
+
+    function renderStatusButtons() {
+      document.querySelectorAll('.st-btn').forEach(btn => {
+        btn.className = btn.dataset.status === state.selectedStatus
+          ? 'st-btn p-2.5 rounded-xl border-2 border-[#0b57a4] bg-blue-50 text-blue-900 text-left transition-all'
+          : 'st-btn p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-left transition-all';
+      });
+      const lbl = document.getElementById('btnSubmitVisitLabel');
+      if (state.selectedStatus === 'Closing') lbl.textContent = 'Simpan & Lanjut ke Order →';
+      else if (state.selectedStatus === 'Minat / Follow-up') lbl.textContent = 'Simpan & Jadwalkan FU (+7/+14 Hr)';
+      else if (state.selectedStatus === 'Owner Tidak Ada') lbl.textContent = 'Simpan & Siapkan WA Hari Ini';
+      else lbl.textContent = 'Simpan & Siapkan Share WA';
+      updateDraftCaption();
+    }
+
+    function renderFollowUpAlerts() {
+      const fus = state.visits.filter(v => v.status === 'Minat / Follow-up');
+      const box = document.getElementById('followUpAlertBox');
+      if (fus.length === 0) { box.classList.add('hidden'); return; }
+      box.classList.remove('hidden');
+      document.getElementById('followUpCountBadge').textContent = `${fus.length}`;
+      document.getElementById('followUpMiniList').innerHTML = fus.slice(0, 5).map(v => {
+        const wa = cleanWaNumber(v.picWa);
+        const msg = encodeURIComponent(`Halo Bapak/Ibu ${v.picName || ''} di ${v.outletName}, saya ${state.loggedInSales} dari PT BTJ (Sales Horeca Kino Bandung). Izin follow-up kunjungan sebelumnya.`);
+        return `<div class="bg-white rounded-xl p-2.5 border border-amber-200 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-xs font-extrabold text-slate-900 truncate">${v.outletName}</p>
+            <p class="text-[10px] text-slate-600">WA: <strong>${v.fuWaDate}</strong> • Visit: <strong>${v.fuVisitDate}</strong></p>
+          </div>
+          ${wa.length >= 9 ? `<a href="https://wa.me/${wa}?text=${msg}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[11px] font-bold shrink-0">WA</a>` : ''}
+        </div>`;
+      }).join('');
+    }
+
+    function updateSelectedProductPrice() {
+      const id = document.getElementById('oProductSelect').value;
+      const unitType = document.getElementById('oUnitType').value;
+      const p = state.products.find(x => x.id === id);
+      if (!p) { document.getElementById('oSelectedPrice').textContent = 'Rp 0'; return; }
+      document.getElementById('oSelectedPrice').textContent = unitType === 'pcs'
+        ? `${fmtRp(Math.round(p.price / (p.packSize || 24)))} / pcs`
+        : `${fmtRp(p.price)} / ${p.unit}`;
+    }
+
+    function renderOrderScreen() {
+      const oSel = document.getElementById('oOutletSelect');
+      if (state.outlets.length === 0) {
+        oSel.innerHTML = `<option value="">-- Belum ada outlet (input di Kunjungan / Master Customer) --</option>`;
+      } else {
+        oSel.innerHTML = state.outlets.map(o => `<option value="${o.id}">${o.name} (${o.isNoo ? 'Outlet Aktif' : 'NOO Baru'})</option>`).join('');
+        if (state.activeOrderOutletId && state.outlets.some(o => o.id === state.activeOrderOutletId)) oSel.value = state.activeOrderOutletId;
+      }
+
+      const pSel = document.getElementById('oProductSelect');
+      const curProd = pSel.value || state.products[0].id;
+      const cats = [...new Set(state.products.map(p => p.cat))];
+      pSel.innerHTML = cats.map(c => `<optgroup label="${c}">${state.products.filter(p => p.cat === c).map(p => `<option value="${p.id}">${p.name} (${fmtRp(p.price)})</option>`).join('')}</optgroup>`).join('');
+      pSel.value = curProd;
+      updateSelectedProductPrice();
+
+      const cartEl = document.getElementById('cartItemsList');
+      if (state.cart.length === 0) {
+        cartEl.innerHTML = `<p class="text-[11px] text-slate-400 text-center py-2">Keranjang kosong. Pilih produk lalu klik <strong>+ Tambah</strong>.</p>`;
+      } else {
+        cartEl.innerHTML = state.cart.map((item, idx) => `
+          <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-slate-900 truncate">${item.name}${item.variant ? ' (' + item.variant + ')' : ''}</p>
+              <p class="text-[11px] text-emerald-800">${item.qty} ${item.unitType} × ${fmtRp(item.unitPrice)} = <strong>${fmtRp(item.subtotal)}</strong></p>
+            </div>
+            <button type="button" data-rm="${idx}" class="rm-cart-btn text-red-600 text-[11px] font-bold px-2">Hapus</button>
+          </div>
+        `).join('');
+        cartEl.querySelectorAll('.rm-cart-btn').forEach(b => b.addEventListener('click', () => { state.cart.splice(Number(b.dataset.rm), 1); renderOrderScreen(); }));
+      }
+      document.getElementById('oCartTotal').textContent = fmtRp(state.cart.reduce((s, i) => s + i.subtotal, 0));
+      updateOrderCaptionPreview();
+
+      document.getElementById('cntOutlets').textContent = state.outlets.length;
+      const todayLogs = state.visits.filter(v => v.date === todayStr());
+      document.getElementById('cntLogs').textContent = todayLogs.length;
+      document.querySelectorAll('.sub-tab-btn').forEach(b => {
+        b.className = b.dataset.sub === state.orderSubTab
+          ? 'sub-tab-btn px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-white text-[#0b57a4] shadow-xs'
+          : 'sub-tab-btn px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-slate-600';
+      });
+
+      const subEl = document.getElementById('orderSubContent');
+      if (state.orderSubTab === 'outlets') {
+        subEl.innerHTML = state.outlets.length === 0
+          ? `<p class="text-xs text-slate-400 text-center py-3">Belum ada outlet. Tambah lewat Kunjungan atau Master Data Customer di tab Account.</p>`
+          : state.outlets.map(o => {
+              const ordSum = state.orders.filter(x => x.outletId === o.id).reduce((s, x) => s + x.total, 0);
+              return `<div class="p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold ${o.isNoo ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">${o.isNoo ? 'Outlet Aktif' : 'Prospek'}</span>
+                  <p class="text-xs font-extrabold text-slate-900 mt-0.5 truncate">${o.name}</p>
+                  <p class="text-[10px] text-slate-500 truncate">${o.channel} • ${o.alamat}</p>
+                  ${ordSum > 0 ? `<p class="text-[10px] font-bold text-emerald-700">Total: ${fmtRp(ordSum)}</p>` : ''}
+                </div>
+                <button type="button" data-revisit="${o.id}" class="revisit-btn px-2.5 py-1.5 rounded-lg bg-blue-50 text-[#0b57a4] text-[11px] font-bold shrink-0">Kunjungi</button>
+              </div>`;
+            }).join('');
+        subEl.querySelectorAll('.revisit-btn').forEach(b => b.addEventListener('click', () => { selectExistingOutlet(b.dataset.revisit); setTab('visit'); }));
+      } else {
+        subEl.innerHTML = todayLogs.length === 0
+          ? `<p class="text-xs text-slate-400 text-center py-3">Belum ada kunjungan hari ini.</p>`
+          : todayLogs.map(v => `
+            <div class="p-2.5 rounded-xl border border-slate-200 space-y-1">
+              <div class="flex justify-between gap-2">
+                <span class="text-xs font-extrabold text-slate-900">${v.outletName}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">${v.status}</span>
+              </div>
+              <p class="text-[11px] font-semibold text-blue-800 bg-blue-50 px-2 py-1 rounded-lg">${v.caption || '-'}</p>
+            </div>`).join('');
+      }
+    }
+
+    function renderMasterCustomer() {
+      const q = (document.getElementById('mcSearch').value || '').trim().toLowerCase();
+      const filtered = q ? state.outlets.filter(o => o.name.toLowerCase().includes(q) || (o.alamat || '').toLowerCase().includes(q)) : state.outlets;
+      const listEl = document.getElementById('masterCustomerList');
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Belum ada data customer. Tambahkan manual di atas atau klik <strong>Import Sheet</strong>.</p>`;
+        return;
+      }
+      listEl.innerHTML = filtered.map(o => {
+        const wa = cleanWaNumber(o.picWa);
+        return `<div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold ${o.isNoo ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">${o.isNoo ? 'Customer Aktif' : 'Prospek'}</span>
+              <span class="text-[10px] text-slate-500">${o.channel}</span>
+            </div>
+            <p class="text-xs font-extrabold text-slate-900 mt-0.5 truncate">${o.name}</p>
+            <p class="text-[10px] text-slate-500 truncate">${o.alamat}</p>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button type="button" data-mcvisit="${o.id}" class="mc-visit-btn px-2 py-1.5 rounded-lg bg-blue-50 text-[#0b57a4] text-[10px] font-bold">Visit</button>
+            ${wa.length >= 9 ? `<a href="https://wa.me/${wa}" target="_blank" rel="noopener noreferrer" class="px-2 py-1.5 rounded-lg bg-emerald-600 text-white text-[10px] font-bold">WA</a>` : ''}
+            <button type="button" data-mcdel="${o.id}" class="mc-del-btn p-1.5 text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+          </div>
+        </div>`;
+      }).join('');
+
+      listEl.querySelectorAll('.mc-visit-btn').forEach(b => b.addEventListener('click', () => { selectExistingOutlet(b.dataset.mcvisit); setTab('visit'); }));
+      listEl.querySelectorAll('.mc-del-btn').forEach(b => b.addEventListener('click', () => {
+        const id = b.dataset.mcdel;
+        openModal('Hapus Customer?', 'Hapus customer ini dari Master Data Customer?', () => {
+          state.outlets = state.outlets.filter(x => x.id !== id);
+          saveState(); renderAll(); showToast('Customer dihapus.');
+        });
+      }));
+    }
+
+    function renderMasterProducts() {
+      const listEl = document.getElementById('masterProductList');
+      listEl.innerHTML = state.products.map(p => `
+        <div class="py-2.5 flex items-center justify-between gap-2">
+          <div class="min-w-0 flex-1">
+            <p class="text-xs font-bold text-slate-900 truncate">${p.name}</p>
+            <p class="text-[10px] text-slate-500">${p.cat} • 1 ${p.unit}</p>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <input type="number" data-pid="${p.id}" value="${p.price}" class="prod-price-input w-20 rounded-lg border border-slate-300 px-1.5 py-1 text-[11px] font-bold text-right outline-none focus:border-blue-600" />
+            <button type="button" data-shareprod="${p.id}" class="share-single-prod px-2 py-1.5 rounded-lg bg-emerald-600 text-white text-[10px] font-bold flex items-center gap-0.5">
+              <i data-lucide="share-2" class="w-3 h-3"></i>
+              WA
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      listEl.querySelectorAll('.prod-price-input').forEach(inp => {
+        inp.addEventListener('change', () => {
+          const item = state.products.find(x => x.id === inp.dataset.pid);
+          if (item) { item.price = Math.max(0, Number(inp.value) || 0); saveState(); showToast(`Harga ${item.shortName} disimpan.`); }
+        });
+      });
+      listEl.querySelectorAll('.share-single-prod').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = state.products.find(x => x.id === btn.dataset.shareprod);
+          if (item) shareCatalogToCustomer([item], 'PENAWARAN PRODUK PT KINO', `Kino_${item.id}`);
+        });
+      });
+    }
+
+    function selectExistingOutlet(outletId) {
+      const o = state.outlets.find(x => x.id === outletId);
+      if (!o) return;
+      state.selectedExistingOutletId = o.id;
+      document.getElementById('fOutlet').value = o.name;
+      document.getElementById('fChannel').value = o.channel;
+      document.getElementById('fAlamat').value = o.alamat;
+      if (o.kecamatan) document.getElementById('fKecamatan').value = o.kecamatan;
+      document.getElementById('fPicName').value = o.picName || '';
+      document.getElementById('fPicWa').value = o.picWa || '';
+      document.getElementById('outletSuggestions').classList.add('hidden');
+      const badge = document.getElementById('outletTypeBadge');
+      badge.textContent = 'Toko Lama (RO)';
+      badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800';
+      updateDraftCaption();
+      renderStampedPhoto();
+    }
+
+    function resetVisitForm(keepPhoto) {
+      document.getElementById('fOutlet').value = '';
+      document.getElementById('fPicName').value = '';
+      document.getElementById('fPicWa').value = '';
+      document.getElementById('fNote').value = '';
+      document.getElementById('visitFormError').classList.add('hidden');
+      state.selectedExistingOutletId = null;
+      if (!keepPhoto) {
+        state.rawImageObj = null;
+        document.getElementById('fPhoto').value = '';
+        document.getElementById('photoPreviewWrap').classList.add('hidden');
+        document.getElementById('photoBtnText').textContent = 'Foto GPS';
+      }
+      const badge = document.getElementById('outletTypeBadge');
+      badge.textContent = 'Outlet Baru (NOO)';
+      badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700';
+      state.selectedStatus = 'Closing';
+      renderStatusButtons();
+    }
+
+    function buildDailyRecapWa() {
+      const k = computeKpiStats();
+      const t = todayStr();
+      const tVisits = state.visits.filter(v => v.date === t);
+      const lines = [`📊 *REKAP HARIAN — PT BTJ (Sales Horeca Kino)*`, `Sales: ${state.loggedInSales} (3355IR6103)`, `Tanggal: ${t}`, `• Visit: *${k.todayVisits}/15*`, `• NOO: *${k.nooCount}/${k.tgtNoo} (${k.pctNoo}%)*`, `• OA: *${k.oaCount}/${k.tgtOa} (${k.pctOa}%)*`, `• Omzet: *${fmtRp(k.totalOmzet)} (${k.pctOmzet}%)*`];
+      if (tVisits.length > 0) { lines.push(``); tVisits.forEach((v, i) => lines.push(`${i + 1}. ${v.caption}`)); }
+      return lines.join('\n');
+    }
+
+    function exportCsv() {
+      if (state.visits.length === 0) { showToast('Belum ada data kunjungan.'); return; }
+      const headers = ['Timestamp','Tanggal','Hari','Sales','Kecamatan','Nama Outlet','Channel','Alamat','PIC','No WA','Keterangan','Status NOO','Auto Caption'];
+      const esc = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+      const rows = state.visits.map(v => [v.timestamp, v.date, v.day, v.sales, v.kecamatan, v.outletName, v.channel, v.alamat, v.picName, v.picWa, v.status, v.isNewNoo ? 'NOO Baru' : '-', v.caption].map(esc).join(','));
+      const blob = new Blob(['\uFEFF' + [headers.map(esc).join(','), ...rows].join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `kunjungan_btj_${todayStr()}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('CSV diunduh!');
+    }
+
+    function renderAll() {
+      renderTopKpis();
+      renderStatusButtons();
+      renderFollowUpAlerts();
+      renderOrderScreen();
+      renderKpiTab();
+      renderMasterCustomer();
+      renderMasterProducts();
+      safeIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      const kecSel = document.getElementById('fKecamatan');
+      kecSel.innerHTML = KECAMATAN_BANDUNG.map(k => `<option value="${k}">${k}</option>`).join('');
+      kecSel.value = 'Sukasari';
+      document.getElementById('fDate').value = todayStr();
+      document.getElementById('fTime').value = nowTimeStr();
+
+      // Login
+      document.getElementById('loginSales').addEventListener('change', e => {
+        const info = state.salesDir[e.target.value];
+        document.getElementById('loginArea').value = info ? info.area : '';
+      });
+      document.getElementById('loginForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const sales = document.getElementById('loginSales').value;
+        const pin = document.getElementById('loginPin').value.trim();
+        const info = state.salesDir[sales];
+        if (info && pin === info.pin) {
+          state.loggedInSales = sales;
+          state.activeTab = 'visit';
+          document.getElementById('loginError').classList.add('hidden');
+          document.getElementById('loginPin').value = '';
+          saveState();
+          showAuthOrApp();
+        } else {
+          document.getElementById('loginError').classList.remove('hidden');
+        }
+      });
+
+      // Bottom Nav 4 buttons
+      document.querySelectorAll('.nav-tab-btn').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+      document.querySelectorAll('.sub-tab-btn').forEach(b => b.addEventListener('click', () => { state.orderSubTab = b.dataset.sub; renderOrderScreen(); }));
+      document.querySelectorAll('.st-btn').forEach(b => b.addEventListener('click', () => { state.selectedStatus = b.dataset.status; renderStatusButtons(); }));
+
+      // Account Screen Menu Actions
+      document.getElementById('btnAccMoreDetail').addEventListener('click', () => setTab('kpi'));
+      document.getElementById('btnAccBell').addEventListener('click', () => {
+        const fus = state.visits.filter(v => v.status === 'Minat / Follow-up').length;
+        showToast(fus > 0 ? `Ada ${fus} outlet terjadwal Follow-up di tab Kunjungan.` : 'Belum ada notifikasi follow-up.');
+      });
+      document.getElementById('menuMyProfile').addEventListener('click', () => { document.getElementById('profileModal').classList.remove('hidden'); safeIcons(); });
+      document.getElementById('btnCloseProfile').addEventListener('click', () => document.getElementById('profileModal').classList.add('hidden'));
+      document.getElementById('btnOkProfile').addEventListener('click', () => document.getElementById('profileModal').classList.add('hidden'));
+      document.getElementById('menuSendData').addEventListener('click', () => { copyText(buildDailyRecapWa(), 'Rekap data disalin untuk dikirim ke WA!'); exportCsv(); });
+      document.getElementById('menuMasterCustomer').addEventListener('click', () => setAccountSubView('customer'));
+      document.getElementById('menuMasterProduct').addEventListener('click', () => setAccountSubView('product'));
+      document.getElementById('menuReport').addEventListener('click', () => setTab('kpi'));
+      document.getElementById('menuSynchronize').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
+      document.getElementById('menuSetting').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
+      document.getElementById('btnHeaderSettings').addEventListener('click', () => { document.getElementById('fWebhookUrl').value = state.webhookUrl; document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
+      document.getElementById('menuExit').addEventListener('click', () => { state.loggedInSales = null; saveState(); showAuthOrApp(); });
+      document.querySelectorAll('.btn-back-account').forEach(b => b.addEventListener('click', () => setAccountSubView('home')));
+      document.getElementById('btnOpenImportFromCust').addEventListener('click', () => { document.getElementById('settingsModal').classList.remove('hidden'); safeIcons(); });
+
+      // Master Customer Manual Add & Search
+      document.getElementById('addCustomerForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const name = document.getElementById('mcName').value.trim();
+        if (!name) return;
+        if (state.outlets.some(o => o.name.toLowerCase() === name.toLowerCase())) { showToast('Customer sudah terdaftar.'); return; }
+        state.outlets.unshift({
+          id: 'mc_' + Date.now(),
+          name,
+          channel: document.getElementById('mcChannel').value,
+          alamat: document.getElementById('mcAlamat').value.trim() || 'Bandung Kota',
+          kecamatan: 'Sukasari',
+          picName: '',
+          picWa: document.getElementById('mcWa').value.trim(),
+          isNoo: true,
+          createdDate: todayStr()
+        });
+        saveState();
+        document.getElementById('addCustomerForm').reset();
+        renderAll();
+        showToast(`${name} masuk ke Master Customer!`);
+      });
+      document.getElementById('mcSearch').addEventListener('input', renderMasterCustomer);
+
+      // Settings Modal Controls
+      document.getElementById('btnCloseSettings').addEventListener('click', () => document.getElementById('settingsModal').classList.add('hidden'));
+      document.getElementById('btnSavePin').addEventListener('click', () => {
+        const oldPin = document.getElementById('inpOldPin').value.trim();
+        const newPin = document.getElementById('inpNewPin').value.trim();
+        const sales = state.loggedInSales || 'Yulli Pratiwi';
+        const cur = state.salesDir[sales];
+        if (!cur || oldPin !== cur.pin) { showToast('PIN lama tidak sesuai.'); return; }
+        if (!/^\d{4,6}$/.test(newPin)) { showToast('PIN baru harus 4–6 angka.'); return; }
+        cur.pin = newPin; saveState();
+        document.getElementById('inpOldPin').value = ''; document.getElementById('inpNewPin').value = '';
+        showToast('PIN baru berhasil disimpan!');
+      });
+
+      document.getElementById('fImportCsv').addEventListener('change', e => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const count = parseAndImportOutlets(ev.target.result);
+          showToast(count > 0 ? `${count} customer di-import ke Master Customer!` : 'Tidak ada customer baru di file CSV.');
+          e.target.value = '';
+        };
+        reader.readAsText(file);
+      });
+      document.getElementById('btnFetchSheetCsv').addEventListener('click', async () => {
+        const url = document.getElementById('inpSheetCsvUrl').value.trim();
+        if (!url.startsWith('https://')) { showToast('Masukkan URL Publish CSV (https://...)'); return; }
+        try {
+          showToast('Menarik data dari Sheet...');
+          const res = await fetch(url);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const count = parseAndImportOutlets(await res.text());
+          showToast(count > 0 ? `${count} customer di-import!` : 'Data sudah ada / format belum sesuai.');
+        } catch (err) {
+          showToast('Gagal tarik URL langsung — coba Upload File CSV atau Paste baris di bawah.');
+        }
+      });
+      document.getElementById('btnImportPasted').addEventListener('click', () => {
+        const count = parseAndImportOutlets(document.getElementById('inpPasteSheet').value);
+        if (count > 0) { document.getElementById('inpPasteSheet').value = ''; showToast(`${count} customer masuk ke Master Data!`); }
+        else showToast('Format kosong atau sudah terdaftar.');
+      });
+
+      // Live Stamp & Caption
+      ['fDate','fTime','fKecamatan','fAlamat','fCoords'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+          renderStampedPhoto();
+          const q = encodeURIComponent(document.getElementById('fCoords').value.trim() || document.getElementById('fAlamat').value.trim() || `Kecamatan ${document.getElementById('fKecamatan').value}, Bandung`);
+          document.getElementById('btnOpenMaps').href = `https://maps.google.com/?q=${q}`;
+        });
+        document.getElementById(id).addEventListener('change', renderStampedPhoto);
+      });
+      ['fOutlet','fNote'].forEach(id => document.getElementById(id).addEventListener('input', () => {
+        document.getElementById('visitFormError').classList.add('hidden');
+        updateDraftCaption();
+      }));
+
+      // GPS button
+      document.getElementById('btnGetGps').addEventListener('click', () => {
+        const statusEl = document.getElementById('gpsStatusMsg');
+        const btnText = document.getElementById('btnGetGpsText');
+        const kec = document.getElementById('fKecamatan').value || 'Sukasari';
+        const applyFallback = (reason) => {
+          btnText.textContent = 'Ambil GPS';
+          const fallbackAddr = `Kec. ${kec}, Kota Bandung, Jawa Barat, Indonesia`;
+          if (!document.getElementById('fAlamat').value.trim()) document.getElementById('fAlamat').value = fallbackAddr;
+          document.getElementById('fCoords').value = `Kec. ${kec}, Bandung`;
+          document.getElementById('btnOpenMaps').href = `https://maps.google.com/?q=${encodeURIComponent(fallbackAddr)}`;
+          statusEl.textContent = reason; statusEl.classList.remove('hidden');
+          renderStampedPhoto(); showToast(`Lokasi diset ke Kec. ${kec}, Bandung`);
+        };
+        btnText.textContent = 'Mencari...'; statusEl.textContent = 'Mengambil titik GPS...'; statusEl.classList.remove('hidden');
+        if (!navigator.geolocation) { applyFallback('GPS tidak tersedia di preview — otomatis pakai Kecamatan terpilih.'); return; }
+        let settled = false;
+        const guard = setTimeout(() => { if (!settled) { settled = true; applyFallback('Sensor GPS dibatasi di preview — otomatis pakai Kecamatan terpilih (di HP langsung GPS aktif).'); } }, 3500);
+        try {
+          navigator.geolocation.getCurrentPosition(pos => {
+            if (settled) return; settled = true; clearTimeout(guard); btnText.textContent = 'Ambil GPS';
+            const lat = pos.coords.latitude.toFixed(6), lng = pos.coords.longitude.toFixed(6);
+            document.getElementById('fCoords').value = `${lat}, ${lng}`;
+            document.getElementById('btnOpenMaps').href = `https://maps.google.com/?q=${lat},${lng}`;
+            statusEl.textContent = `GPS aktif: ${lat}, ${lng}`;
+            renderStampedPhoto(); showToast(`GPS didapat: ${lat}, ${lng}`);
+          }, () => { if (!settled) { settled = true; clearTimeout(guard); applyFallback('Izin GPS diblokir di preview — otomatis pakai Kecamatan terpilih.'); } }, { enableHighAccuracy: true, timeout: 3000 });
+        } catch (err) { if (!settled) { settled = true; clearTimeout(guard); applyFallback('Otomatis pakai Kecamatan terpilih.'); } }
+      });
+
+      document.getElementById('fPhoto').addEventListener('change', e => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => {
+            state.rawImageObj = img;
+            document.getElementById('photoPreviewWrap').classList.remove('hidden');
+            document.getElementById('photoBtnText').textContent = 'Ganti Foto';
+            renderStampedPhoto(); showToast('Foto berstempel GPS siap!');
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+      document.getElementById('btnRemovePhoto').addEventListener('click', () => {
+        state.rawImageObj = null; state.lastStampedDataUrl = '';
+        document.getElementById('fPhoto').value = '';
+        document.getElementById('photoPreviewWrap').classList.add('hidden');
+        document.getElementById('photoBtnText').textContent = 'Foto GPS';
+      });
+      document.getElementById('btnDownloadStampNow').addEventListener('click', () => downloadStampedPhoto());
+      document.getElementById('btnShareStampNow').addEventListener('click', () => shareStampedPhotoAndCaption(document.getElementById('liveAutoCaption').textContent, document.getElementById('fOutlet').value.trim()));
+      document.getElementById('btnCopyDraftCaption').addEventListener('click', () => copyText(document.getElementById('liveAutoCaption').textContent, 'Caption disalin!'));
+      document.getElementById('btnShareDraftNow').addEventListener('click', () => shareStampedPhotoAndCaption(document.getElementById('liveAutoCaption').textContent, document.getElementById('fOutlet').value.trim()));
+
+      document.getElementById('fOutlet').addEventListener('input', e => {
+        const q = e.target.value.trim().toLowerCase();
+        state.selectedExistingOutletId = null;
+        const badge = document.getElementById('outletTypeBadge');
+        badge.textContent = 'Outlet Baru (NOO)'; badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700';
+        const sugEl = document.getElementById('outletSuggestions');
+        if (!q || state.outlets.length === 0) { sugEl.classList.add('hidden'); return; }
+        const matches = state.outlets.filter(o => o.name.toLowerCase().includes(q));
+        if (matches.length === 0) { sugEl.classList.add('hidden'); return; }
+        sugEl.innerHTML = matches.map(m => `<button type="button" data-oid="${m.id}" class="sug-item w-full text-left px-3 py-2 hover:bg-blue-50 flex justify-between items-center gap-2"><div><div class="text-xs font-bold">${m.name}</div><div class="text-[10px] text-slate-500">${m.channel} • ${m.alamat}</div></div><span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">Toko Lama</span></button>`).join('');
+        sugEl.classList.remove('hidden');
+        sugEl.querySelectorAll('.sug-item').forEach(b => b.addEventListener('click', () => selectExistingOutlet(b.dataset.oid)));
+      });
+
+      document.getElementById('visitForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const errEl = document.getElementById('visitFormError');
+        const name = document.getElementById('fOutlet').value.trim();
+        if (!name) { errEl.textContent = 'Isi Nama Outlet terlebih dahulu.'; errEl.classList.remove('hidden'); showToast('Nama Outlet wajib diisi!'); return; }
+        errEl.classList.add('hidden');
+
+        const channel = document.getElementById('fChannel').value;
+        const kecamatan = document.getElementById('fKecamatan').value || 'Sukasari';
+        const alamat = document.getElementById('fAlamat').value.trim() || `Kec. ${kecamatan}, Kota Bandung`;
+        const picName = document.getElementById('fPicName').value.trim();
+        const picWa = document.getElementById('fPicWa').value.trim();
+        const note = document.getElementById('fNote').value.trim();
+        const visitDate = document.getElementById('fDate').value || todayStr();
+        const visitTime = document.getElementById('fTime').value || nowTimeStr();
+        const status = state.selectedStatus;
+        renderStampedPhoto();
+
+        let outlet = state.selectedExistingOutletId ? state.outlets.find(o => o.id === state.selectedExistingOutletId) : state.outlets.find(o => o.name.toLowerCase() === name.toLowerCase());
+        let isNewNoo = false;
+        const wasAlreadyNoo = !!(outlet && outlet.isNoo);
+        if (!outlet) {
+          outlet = { id: 'out_' + Date.now(), name, channel, kecamatan, alamat, picName, picWa, isNoo: status === 'Closing', createdDate: visitDate };
+          state.outlets.unshift(outlet);
+          if (status === 'Closing') isNewNoo = true;
+        } else {
+          outlet.channel = channel; outlet.kecamatan = kecamatan; outlet.alamat = alamat;
+          if (picName) outlet.picName = picName; if (picWa) outlet.picWa = picWa;
+          if (status === 'Closing' && !outlet.isNoo) { outlet.isNoo = true; isNewNoo = true; }
+        }
+
+        const fuWaDate = status === 'Minat / Follow-up' ? addDaysFrom(visitDate, 7) : '';
+        const fuVisitDate = status === 'Minat / Follow-up' ? addDaysFrom(visitDate, 14) : '';
+        const caption = buildVisitCaption(outlet.name, status, note, wasAlreadyNoo);
+        const visit = {
+          id: 'vis_' + Date.now(), timestamp: `${visitDate} ${visitTime}`, date: visitDate, day: dayNameId(visitDate),
+          sales: state.loggedInSales, kecamatan, outletId: outlet.id, outletName: outlet.name,
+          channel, alamat, picName, picWa, status, isNewNoo, note, caption,
+          hasPhoto: !!state.lastStampedDataUrl, fuWaDate, fuVisitDate
+        };
+        state.visits.unshift(visit);
+        state.lastSavedCaption = caption; state.lastSavedOutletName = outlet.name;
+        saveState();
+
+        if (status === 'Closing') {
+          document.getElementById('postActionBanner').classList.add('hidden');
+          state.activeOrderOutletId = outlet.id; state.activeOrderIsNewNoo = isNewNoo; state.cart = [];
+          resetVisitForm(true);
+          showToast(isNewNoo ? `${outlet.name} masuk NOO Baru! Lanjut order.` : `RO ${outlet.name}. Lanjut order!`);
+          setTab('order');
+          return;
+        }
+
+        await pushToSheet({ timestamp: visit.timestamp, date: visit.date, day: visit.day, kecamatan, outlet: outlet.name, channel, pic: `${picName} ${picWa}`.trim(), status, isNoo: false, followUpInfo: fuWaDate ? `WA: ${fuWaDate} | Visit: ${fuVisitDate}` : '-', orderTotal: 0, caption, hasPhoto: visit.hasPhoto });
+
+        const banner = document.getElementById('postActionBanner');
+        const wa = cleanWaNumber(picWa);
+        const ownerWaMsg = encodeURIComponent(`Halo Bapak/Ibu ${picName || ''} pemilik ${outlet.name}, saya ${state.loggedInSales} dari PT BTJ (Sales Horeca Kino Bandung). Tadi saya sempat mampir ke outlet tapi Bapak/Ibu sedang tidak di tempat.`);
+        banner.className = 'rounded-2xl p-3.5 border border-emerald-200 bg-emerald-50 space-y-2';
+        banner.innerHTML = `
+          <div class="text-xs font-extrabold text-emerald-900">✅ Tersimpan: ${outlet.name}</div>
+          <div class="p-2 rounded-xl bg-white border border-emerald-200 text-xs font-bold text-slate-800">${caption}</div>
+          ${fuWaDate ? `<p class="text-[11px] text-blue-800 font-semibold">FU WA: <strong>${fuWaDate}</strong> • Visit: <strong>${fuVisitDate}</strong></p>` : ''}
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" id="btnBannerShare" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold">Share Foto + WA</button>
+            <button type="button" id="btnBannerDownload" class="px-3 py-1.5 rounded-xl bg-white border border-emerald-300 text-emerald-900 text-xs font-bold">Download</button>
+            <button type="button" id="btnBannerCopy" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Copy</button>
+            ${status === 'Owner Tidak Ada' && wa.length >= 9 ? `<a href="https://wa.me/${wa}?text=${ownerWaMsg}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-[#0b57a4] text-white text-xs font-bold">WA Owner</a>` : ''}
+          </div>`;
+        banner.classList.remove('hidden');
+        document.getElementById('btnBannerShare').addEventListener('click', () => shareStampedPhotoAndCaption(caption, outlet.name));
+        document.getElementById('btnBannerDownload').addEventListener('click', () => downloadStampedPhoto(outlet.name));
+        document.getElementById('btnBannerCopy').addEventListener('click', () => copyText(caption, 'Caption disalin!'));
+
+        showToast(`Kunjungan ${outlet.name} tersimpan!`);
+        resetVisitForm(false);
+        renderAll();
+      });
+
+      // Order Controls
+      document.getElementById('oOutletSelect').addEventListener('change', () => {
+        const oid = document.getElementById('oOutletSelect').value;
+        state.activeOrderOutletId = oid;
+        const o = state.outlets.find(x => x.id === oid);
+        state.activeOrderIsNewNoo = o ? !o.isNoo : true;
+        updateOrderCaptionPreview();
+      });
+      document.getElementById('oProductSelect').addEventListener('change', updateSelectedProductPrice);
+      document.getElementById('oUnitType').addEventListener('change', updateSelectedProductPrice);
+      document.getElementById('btnAddCartItem').addEventListener('click', () => {
+        const pid = document.getElementById('oProductSelect').value;
+        const unitType = document.getElementById('oUnitType').value;
+        const qty = Math.max(1, Number(document.getElementById('oQty').value) || 1);
+        const variant = document.getElementById('oVariantNote').value.trim();
+        const prod = state.products.find(p => p.id === pid);
+        if (!prod) return;
+        const unitPrice = unitType === 'pcs' ? Math.round(prod.price / (prod.packSize || 24)) : prod.price;
+        state.cart.push({ productId: prod.id, name: prod.name, shortName: prod.shortName, unitType, variant, unitPrice, qty, subtotal: unitPrice * qty });
+        document.getElementById('oQty').value = 1; document.getElementById('oVariantNote').value = '';
+        renderOrderScreen();
+      });
+      document.getElementById('btnClearCart').addEventListener('click', () => { state.cart = []; renderOrderScreen(); });
+      document.getElementById('btnCopyOrderCaptionOnly').addEventListener('click', () => copyText(document.getElementById('liveOrderCaption').textContent, 'Caption order disalin!'));
+      document.getElementById('btnSaveOrder').addEventListener('click', async () => {
+        const oid = document.getElementById('oOutletSelect').value;
+        const outlet = state.outlets.find(o => o.id === oid);
+        if (!outlet) { showToast('Pilih outlet dulu.'); return; }
+        if (state.cart.length === 0) { showToast('Tambahkan minimal 1 barang.'); return; }
+        const total = state.cart.reduce((s, i) => s + i.subtotal, 0);
+        const caption = buildOrderCaption(outlet.name, state.activeOrderIsNewNoo, state.cart);
+        const orderDate = document.getElementById('fDate').value || todayStr();
+        const orderTime = document.getElementById('fTime').value || nowTimeStr();
+        const order = { id: 'ord_' + Date.now(), timestamp: `${orderDate} ${orderTime}`, date: orderDate, outletId: outlet.id, outletName: outlet.name, items: JSON.parse(JSON.stringify(state.cart)), total, caption };
+        state.orders.unshift(order);
+        outlet.isNoo = true;
+        const latestVis = state.visits.find(v => v.outletId === outlet.id && v.date === orderDate);
+        if (latestVis) latestVis.caption = caption;
+        state.lastSavedCaption = caption; state.lastSavedOutletName = outlet.name;
+        saveState();
+        copyText(caption, 'Order disimpan & Caption WA disalin!');
+        await pushToSheet({ timestamp: order.timestamp, date: order.date, day: dayNameId(order.date), kecamatan: outlet.kecamatan || 'Bandung Kota', outlet: outlet.name, channel: outlet.channel, pic: `${outlet.picName || ''} ${outlet.picWa || ''}`.trim(), status: 'Deal / NOO', isNoo: state.activeOrderIsNewNoo, followUpInfo: '-', orderTotal: total, caption, hasPhoto: !!state.lastStampedDataUrl });
+        state.cart = []; renderAll();
+      });
+      document.getElementById('btnShareOrderPhoto').addEventListener('click', () => {
+        const cap = state.cart.length > 0 ? document.getElementById('liveOrderCaption').textContent : state.lastSavedCaption;
+        const outlet = state.outlets.find(o => o.id === document.getElementById('oOutletSelect').value);
+        shareStampedPhotoAndCaption(cap, outlet ? outlet.name : state.lastSavedOutletName);
+      });
+      document.getElementById('btnDownloadOrderPhoto').addEventListener('click', () => {
+        const outlet = state.outlets.find(o => o.id === document.getElementById('oOutletSelect').value);
+        downloadStampedPhoto(outlet ? outlet.name : state.lastSavedOutletName);
+      });
+      document.getElementById('btnCopyRecapWa').addEventListener('click', () => copyText(buildDailyRecapWa(), 'Rekap harian WA disalin!'));
+
+      // KPI Controls
+      document.getElementById('btnSaveTargets').addEventListener('click', () => {
+        state.targets.omzet = Math.max(100000, Number(document.getElementById('inpTgtOmzet').value) || 100000000);
+        state.targets.oa = Math.max(1, Number(document.getElementById('inpTgtOa').value) || 30);
+        state.targets.noo = Math.max(1, Number(document.getElementById('inpTgtNoo').value) || 30);
+        saveState(); renderAll(); showToast('Target KPI disimpan!');
+      });
+      document.getElementById('btnCopyKpiWa').addEventListener('click', () => {
+        const k = computeKpiStats();
+        const msg = `📈 *KPI BULANAN — PT BTJ (Sales Horeca Kino)*\nSales: ${state.loggedInSales} (3355IR6103)\n• Omzet: ${fmtRp(k.totalOmzet)} / ${fmtRp(k.tgtOmzet)} (*${k.pctOmzet}%*)\n• OA: ${k.oaCount} / ${k.tgtOa} (*${k.pctOa}%*)\n• NOO: ${k.nooCount} / ${k.tgtNoo} (*${k.pctNoo}%*)`;
+        copyText(msg, 'Laporan KPI disalin!');
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+      });
+
+      // Catalog Share Controls
+      function getFilteredCatalog() {
+        const f = document.getElementById('catShareFilter').value;
+        if (f === 'minuman') return { list: state.products.filter(p => p.group === 'minuman'), title: 'KATALOG MINUMAN PT KINO', slug: 'Katalog_Minuman_Kino' };
+        if (f === 'snack') return { list: state.products.filter(p => p.group === 'snack'), title: 'KATALOG SNACK & PIA 100', slug: 'Katalog_Snack_Kino' };
+        return { list: state.products, title: 'KATALOG LENGKAP PT KINO', slug: 'Katalog_Lengkap_Kino' };
+      }
+      document.getElementById('btnShareCatalogImg').addEventListener('click', () => { const c = getFilteredCatalog(); shareCatalogToCustomer(c.list, c.title, c.slug); });
+      document.getElementById('btnDownloadCatalogImg').addEventListener('click', () => {
+        const c = getFilteredCatalog();
+        const url = drawProductCardCanvas(c.list, c.title);
+        const a = document.createElement('a'); a.href = url; a.download = `${c.slug}_${todayStr()}.jpg`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        showToast('Gambar katalog di-download!');
+      });
+      document.getElementById('btnHideCatPreview').addEventListener('click', () => document.getElementById('catalogPreviewBox').classList.add('hidden'));
+
+      // Sheet Sync Controls
+      document.getElementById('btnSaveWebhook').addEventListener('click', () => {
+        const u = document.getElementById('fWebhookUrl').value.trim();
+        if (u && !u.startsWith('https://')) { showToast('URL harus https://'); return; }
+        state.webhookUrl = u; saveState(); showToast(u ? 'URL Sheet disimpan!' : 'URL dikosongkan.');
+      });
+      document.getElementById('btnExportCsv').addEventListener('click', exportCsv);
+      document.getElementById('btnCopyScript').addEventListener('click', () => copyText(APPS_SCRIPT_CODE, 'Kode Apps Script disalin!'));
+      document.getElementById('btnResetAllData').addEventListener('click', () => {
+        openModal('Reset Data Lokal?', 'Semua kunjungan, customer, dan order lokal akan dihapus.', () => {
+          state.outlets = []; state.visits = []; state.orders = []; state.cart = [];
+          saveState(); renderAll(); showToast('Data lokal dikosongkan.');
+        });
+      });
+
+      document.getElementById('modalCancel').addEventListener('click', () => document.getElementById('confirmModal').classList.add('hidden'));
+      document.getElementById('modalConfirm').addEventListener('click', () => { if (modalCb) modalCb(); document.getElementById('confirmModal').classList.add('hidden'); });
+
+      showAuthOrApp();
+    });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
